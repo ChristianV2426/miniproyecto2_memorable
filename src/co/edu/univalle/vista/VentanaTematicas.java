@@ -120,7 +120,7 @@ public class VentanaTematicas extends Ventana {
             juego.setIndexCategoriaSeleccionada(indexCategoriaSeleccionada);
             juego.setNumeroDePalabrasAAdivinar(numeroDePalabrasAAdivinar);
             dispose();
-            VentanaJuego ventanaJuego = new VentanaJuego(juego);
+            // VentanaJuego ventanaJuego = new VentanaJuego(juego);
 
         } catch (NumberFormatException exception){
             JOptionPane.showMessageDialog(null, "Por favor ingrese un número válido", "Error de ingreso de dato numérico", JOptionPane.ERROR_MESSAGE);
