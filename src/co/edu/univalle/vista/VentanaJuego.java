@@ -33,16 +33,18 @@ import javax.swing.*;
 
     // Atributos:
     public class VentanaJuego extends Ventana {
-        private JLabel labelPuntuacion = new JLabel("Puntuación:");
+        private JLabel labelPuntuacion = new JLabel("Puntuación: 0000");
         private JLabel labelVidas = new JLabel("♥♥♥");
         private JLabel labelCondicionTexto = new JLabel("Busque las palabras con la siguiente condición:");
+        private JLabel labelUsuario = new JLabel("Jugador: Juan Narváez");
         private JLabel labelCondicionSimbolo = new JLabel("♣️");
         private JPanel panelCabecera = new JPanel();
         private JPanel panelMatriz = new JPanel();
         private JPanel panelPrincipal = new JPanel();
         private JPanel panelFinal = new JPanel();
         private JPanel cajaButton = new JPanel();
-        private JButton buttonSonido = new JButton("Sonido");
+        private JPanel cajaInfoCabecera = new JPanel();
+        private JButton buttonSonido = new JButton("🔊"); //🔇
 
         
         // Constructor:
@@ -51,22 +53,28 @@ import javax.swing.*;
             // Listeners:
 
             // Pintar páneles de prueba.
-
+            // cajaButton.setBackground(Color.blue);
             
             // Configuración de páneles propios.
             northPanel.setPreferredSize(new Dimension(100, 90));
             northPanel.setBackground(new Color(79, 198, 198));
-            panelCabecera.setLayout(new GridLayout(1, 3,40,40));
+            
+            panelCabecera.setLayout(new GridLayout(2, 1));
             panelCabecera.setBackground(new Color(0, 0, 0, 0));
+            cajaInfoCabecera.setLayout(new GridLayout(1, 3,40,40));
             cajaButton.setBackground(new Color(0, 0, 0, 0));
+            cajaInfoCabecera.setBackground(new Color(0, 0, 0, 0));
             panelMatriz.setLayout(new GridLayout(4, 9, 10, 10));
             panelPrincipal.setLayout(new GridLayout(3, 1, 0, 5));
             panelPrincipal.setPreferredSize(new Dimension(370, 270));
             labelVidas.setForeground(new Color(205, 69, 69));
-            labelVidas.setFont(new Font("Arial", Font.PLAIN, 42));
+            labelVidas.setFont(new Font("Arial", Font.PLAIN, 36));
+            labelCondicionTexto.setFont(new Font("Arial", Font.PLAIN, 18));
+            labelCondicionSimbolo.setFont(new Font("Arial", Font.PLAIN, 24));
             labelPuntuacion.setFont(new Font("Arial", Font.PLAIN, 24));
-            labelVidas.setHorizontalAlignment(JLabel.RIGHT);
-
+            labelVidas.setHorizontalAlignment(JLabel.CENTER);
+            cajaInfoCabecera.setPreferredSize(new Dimension(650, 80));
+ 
             
 
             // Añadidos de ventana inicial. 
@@ -80,9 +88,10 @@ import javax.swing.*;
 
 
             cajaButton.add(buttonSonido);
-            panelCabecera.add(cajaButton);
-            panelCabecera.add(labelPuntuacion);
-            panelCabecera.add(labelVidas);
+            cajaInfoCabecera.add(cajaButton);
+            cajaInfoCabecera.add(labelPuntuacion);
+            cajaInfoCabecera.add(labelVidas);
+            panelCabecera.add(cajaInfoCabecera);
             panelFinal.add(labelCondicionTexto);
             panelFinal.add(labelCondicionSimbolo);
             
