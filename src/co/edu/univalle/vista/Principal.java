@@ -1,7 +1,7 @@
 /*
     Archivo: Principal.java
     Fundamentos de Programación Orientada a Eventos - 750014C Grupo 01
-    Proyecto 1 - El ahorcado
+    Proyecto 2 - Memorable
 
     Autores: 
     Juan Camilo Narvaez Tascon - juan.narvaez.tascon@correounivalle.edu.co - 2140112-3743
@@ -14,14 +14,14 @@
 */
 
 /**
-    HISTORIA: Se realizará un juego de ahorcado el cual permita elegir la categoría de palabras
-    que se quieren adivinar. Este juego preguntará el numbre del participante antes de iniciar,
-    para posteriormente darle a seleccionar el número de palabras que desea adivinar y la respectiva
-    categoría. Cuando se hayan consumido las palabras se preguntará si desea continuar o no;
-    si se desea continuar se volverá a preguntar el número de palabras y la categoría seleccionada
-    para la siguiente ronda; si no desea continuar se mostrarán las estadísticas de juego. En la
-    VentanaInicio podrá ir a respectivas ventanas que informen de las instrucciones y el objetivo
-    educativo de la aplicación.
+    HISTORIA: Se realiza el juego "Memorable", cuya intención es ejercitar la capacidad de memoria del jugador
+    al igual que potenciar su habilidad para reconocer y retener patrones.
+    En la ventana inicial, el participante deberá ingresar su nombre antes de iniciar del juego. También tendrá 
+    las opciones de leer las instrucciones del juego o los beneficios del mismo. 
+    Durante la ejecución del juego, el participante podrá utilizar bien sea el teclado o el mouse para llevar a cabo
+    la selección de las figuras (leer las instrucciones del juego para mayor información). También tendrá la posibilidad 
+    de apagar o encender el audio del juego (el cual empieza encendido por defecto).
+    Al final de la partida, el participante verá las estadísticas de su desempeño durante el juego.
 */
 
 package co.edu.univalle.vista;

@@ -1,7 +1,7 @@
 /*
     Archivo: Ventana.java
     Fundamentos de Programación Orientada a Eventos - 750014C Grupo 01
-    Proyecto 1 - El ahorcado
+    Proyecto 2 - Memorable
 
     Autores: 
     Juan Camilo Narvaez Tascon - juan.narvaez.tascon@correounivalle.edu.co - 2140112-3743
@@ -15,7 +15,7 @@
 
 /**
     CLASE: Ventana
-    INTENCIÓN: Esta clase definirá los valores iniciales de todas las ventanas hijas.
+    INTENCIÓN: Esta clase definirá los valores iniciales de todas las ventanas derivadas.
     RELACIONES:
     -Es un JFrame. 
     -Implementa la interfaz ActionListener, del paquete awt.event.
@@ -36,7 +36,7 @@ public abstract class Ventana extends JFrame implements ActionListener{
     protected JPanel southPanel = new JPanel(); 
 
     public Ventana(){
-        setTitle("El Ahorcado - Universidad del Valle");
+        setTitle("Memorable - Universidad del Valle");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(850,480);
         setResizable(false);
