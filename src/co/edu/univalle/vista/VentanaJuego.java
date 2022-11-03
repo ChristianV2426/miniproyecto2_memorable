@@ -25,7 +25,7 @@
 
 package co.edu.univalle.vista;
 
-// import co.edu.univalle.logica.Juego;
+import co.edu.univalle.logica.*;
 import java.awt.*;
 // import java.util.*;
 import java.awt.event.*;
@@ -49,7 +49,6 @@ import javax.swing.*;
         
         // Constructor:
         public VentanaJuego(){
-            
             // Listeners:
 
             // Pintar páneles de prueba.
@@ -75,17 +74,14 @@ import javax.swing.*;
             labelVidas.setHorizontalAlignment(JLabel.CENTER);
             cajaInfoCabecera.setPreferredSize(new Dimension(650, 80));
  
-            
 
             // Añadidos de ventana inicial. 
-
+            
             for(int recuadros = 0; recuadros < 36; recuadros++) {
-                JPanel recuadro = new JPanel();
-                recuadro.setPreferredSize(new Dimension(50, 50));
-                recuadro.setBackground(new Color(79, 198, 198));
-                panelMatriz.add(recuadro);
-            }
+                Casilla recuadro = new Casilla();
+                panelMatriz.add(recuadro.pintar());
 
+            }
 
             cajaButton.add(buttonSonido);
             cajaInfoCabecera.add(cajaButton);
@@ -102,8 +98,6 @@ import javax.swing.*;
             // Mostrar Pantalla Inicial.
             setVisible(true);
     }   
-
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
