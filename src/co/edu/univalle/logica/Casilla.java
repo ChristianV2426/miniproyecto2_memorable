@@ -25,8 +25,8 @@ public class Casilla implements MouseListener{
          * a la hora de pintar los simbolos, puesto que, como está,
          * siempre pintará un símbolo en la casilla 30 si no se 
          * han pintado símbolos antes, y consiguiente pintará
-         * simbolos seguidos.
-         */
+         * simbolos seguidos. Prueba de conflicto.
+         */ 
 
         if(rondaAsociada == 1) {
             if (contadorId < 36){
@@ -44,7 +44,6 @@ public class Casilla implements MouseListener{
                     System.out.println("ENTRÓ en " + contadorId + " y pintó " + simbolo);
                     contadorNivelacion++;
                 }
-                
             }
         }
     }
