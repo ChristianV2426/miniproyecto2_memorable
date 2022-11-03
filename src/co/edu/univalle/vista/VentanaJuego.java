@@ -76,7 +76,6 @@ import javax.swing.*;
  
 
             // Añadidos de ventana inicial. 
-            
             for(int recuadros = 0; recuadros < 36; recuadros++) {
                 Casilla recuadro = new Casilla();
                 panelMatriz.add(recuadro.pintar());
