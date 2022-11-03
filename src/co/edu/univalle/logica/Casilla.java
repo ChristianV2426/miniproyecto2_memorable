@@ -25,7 +25,7 @@ public class Casilla implements MouseListener{
          * a la hora de pintar los simbolos, puesto que, como está,
          * siempre pintará un símbolo en la casilla 30 si no se 
          * han pintado símbolos antes, y consiguiente pintará
-         * simbolos seguidos. Prueba de conflicto.
+         * simbolos seguidos. Prueba 2.
          */ 
 
         if(rondaAsociada == 1) {
