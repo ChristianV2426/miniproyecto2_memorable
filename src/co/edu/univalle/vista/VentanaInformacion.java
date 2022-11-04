@@ -46,7 +46,7 @@ public class VentanaInformacion extends Ventana {
 		
         // Panel superior:
         northPanel.setPreferredSize(new Dimension(850, 90));
-        northPanel.setBackground(new Color(27, 159, 119));
+        northPanel.setBackground(new Color(0, 157, 113));
         panelCabecera.setLayout(new GridLayout(2, 1));
         panelCabecera.setBackground(new Color(0, 0, 0, 0));
         labelTitulo.setFont(new Font("Arial", Font.BOLD, 34));
@@ -97,8 +97,6 @@ public class VentanaInformacion extends Ventana {
         restricciones.gridheight = 1;
         panelPrincipal.add(new JPanel(), restricciones);
 
-        JPanel panel3 = new JPanel();
-        panel3.setBackground(Color.YELLOW);
         restricciones.gridx = 1;
         restricciones.gridy = 3;
         restricciones.gridwidth = 1; 
