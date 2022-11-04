@@ -14,36 +14,38 @@ public class Casilla implements MouseListener{
 
     /*  El tener un registro de qué ronda se está jugando
     permitirá ir aumentando la dificultad. */ 
-    private Juego pruebaJuego = new Juego(1);
+    static private Juego pruebaJuego;
 
-    public Casilla(){
+    public Casilla(Juego pruebaJuego){
+        this.pruebaJuego = pruebaJuego;
+        Boolean correcionPorcentaje = true;
+        int numeroSimbolosAPintar = 8;
         int rondaAsociada = pruebaJuego.getRondaAsociada();
-        int simboloAPintar = random.nextInt(100);
+        /* Con base en el número de casillas (36), y el número de elementos que pueden ser
+         * pintados (4), se considera el número 30 como una buena estimación probabilística 
+         * para el correcto funcinamiento de los símbolos pintados. */
+        int simboloAPintar = random.nextInt(30); // Funciona como valor probabilístico.
 
 
-        /* TODO: Se debe de corregir el sistema de probabilidad 
-         * a la hora de pintar los simbolos, puesto que, como está,
-         * siempre pintará un símbolo en la casilla 30 si no se 
-         * han pintado símbolos antes, y consiguiente pintará
-         * simbolos seguidos. Prueba de conflicto.
-         */ 
-
+        /* TODO: Se debe tener en consideración que el elemento que sale en condición
+         * debe aparecer en los simbolos desplegados. */
         if(rondaAsociada == 1) {
             if (contadorId < 36){
-                if (simboloAPintar >= 0 && simboloAPintar <= 3 && contadorNivelacion < 5) {
+                // Se asegura de que por lo menos se pinte una vez.
+                if(contadorNivelacion != numeroSimbolosAPintar-1 && contadorId > 30 && correcionPorcentaje) {
+                    correcionPorcentaje = false;
+                    simboloAPintar = random.nextInt(6); // Porcentaje de alerta.
+                    System.out.println("ENTRÓ en " + contadorId + " y pintó " + simbolo);
+                }
+
+                if (simboloAPintar >= 0 && simboloAPintar <= 3 && contadorNivelacion < numeroSimbolosAPintar) {
                     simbolo = simbolos[simboloAPintar];
                     contadorNivelacion++;
                 } else {
                     simbolo = simbolos[4];
                 }
+    
                 contadorId++;
-                
-                // **** CORREGIR
-                if(contadorId > 29 && contadorNivelacion <= 4) {
-                    simbolo = simbolos[random.nextInt(4)];
-                    System.out.println("ENTRÓ en " + contadorId + " y pintó " + simbolo);
-                    contadorNivelacion++;
-                }
             }
         }
     }
@@ -75,6 +77,8 @@ public class Casilla implements MouseListener{
         // TODO Auto-generated method stub
         // this.pintar().setBackground(Color.RED);
         System.out.println(getSimbolo());
+        System.out.println(pruebaJuego.getSimboloRonda());
+        System.out.println(pruebaJuego.aciertoSimbolo(getSimbolo()));
     }
 
     @Override

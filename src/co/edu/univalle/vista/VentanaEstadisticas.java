@@ -69,10 +69,10 @@ public class VentanaEstadisticas extends Ventana {
         
         // Añadidos de ventana inicial.
         // Una buena opción sería incluir este bloque en un try catch
-        labelRodasRealizadas.setText("Rondas realizadas: " + juego.getRondasEjecutadas());
-        labelMejorRonda.setText("Mejor ronda: " + juego.getMejorRonda() + " (" + juego.getMayorPorcentajeRondas() + "%)");
-        labelPeorRonda.setText("Peor ronda: " + juego.getPeorRonda() + " (" + juego.getPeorPorcentajeRondas() + "%)");
-        labelModaPalabra.setText("Palabra más acertada: " + juego.palabraMasAcertada());
+        // labelRodasRealizadas.setText("Rondas realizadas: " + juego.getRondasEjecutadas());
+        // labelMejorRonda.setText("Mejor ronda: " + juego.getMejorRonda() + " (" + juego.getMayorPorcentajeRondas() + "%)");
+        // labelPeorRonda.setText("Peor ronda: " + juego.getPeorRonda() + " (" + juego.getPeorPorcentajeRondas() + "%)");
+        // labelModaPalabra.setText("Palabra más acertada: " + juego.palabraMasAcertada());
 
 
         labelRodasRealizadas.setHorizontalAlignment(JLabel.CENTER);
