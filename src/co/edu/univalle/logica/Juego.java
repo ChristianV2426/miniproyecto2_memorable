@@ -48,6 +48,11 @@ public class Juego {
         this.nombreDelJugador = nombreDelJugador;
     }
 
+    public void nuevaRonda() {
+        palabraAAdivinar = simbolos[random.nextInt(4)];
+        rondaAsociada += 1;
+    }
+
     public int getRondaAsociada(){
         return rondaAsociada;
     }
@@ -78,12 +83,14 @@ public class Juego {
     private void sumarPuntos(){
         puntuacion += 100;
         ventanaAsociada.actualizarPuntos();
+        ventanaAsociada.actualizarCasillas();
     }
-
+    
     private void restarVida(){
         if(vidas.length() > 0) {
             vidas.deleteCharAt(vidas.length()-1);
             ventanaAsociada.actualizarVidas();
+            ventanaAsociada.actualizarCasillas();
         } else {
             System.out.println("No hay más vidas");// Texto de depuración. !!!!!!!!!!
         }
