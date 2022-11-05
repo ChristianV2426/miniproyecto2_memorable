@@ -29,16 +29,13 @@ import javax.swing.*;
 
 public class VentanaInformacion extends Ventana {
     // Atributos:
-    private JLabel labelTitulo = new JLabel("El Ahorcado");
-    private JLabel labelSubtitulo = new JLabel("Universidad del Valle");
+    private JLabel labelTitulo = new JLabel("M E M O R A B L E");
+    private JLabel labelSubtitulo = new JLabel("¿Para qué sirve?");
     private JLabel labelBeneficios = new JLabel("Beneficios de este juego:");    
     private JLabel labelLinea1;
     private JLabel labelLinea2;
-    private JLabel labelLinea3;
-    private JLabel labelLinea4;
     private JPanel panelCabecera = new JPanel();
     private JPanel panelPrincipal = new JPanel();
-    private JPanel panelFinal = new JPanel();
     private JButton buttonVolver = new JButton("Volver");
     
     // Constructor:
@@ -47,16 +44,11 @@ public class VentanaInformacion extends Ventana {
         // Listeners:
         buttonVolver.addActionListener(this);
 		
-        // Configuración de páneles propios.
-        northPanel.setPreferredSize(new Dimension(100, 90));
-        northPanel.setBackground(new Color(79, 198, 198));
+        // Panel superior:
+        northPanel.setPreferredSize(new Dimension(850, 90));
+        northPanel.setBackground(new Color(0, 165, 181));
         panelCabecera.setLayout(new GridLayout(2, 1));
         panelCabecera.setBackground(new Color(0, 0, 0, 0));
-        panelPrincipal.setLayout(new GridLayout(6, 1, 0, 5));
-        panelPrincipal.setPreferredSize(new Dimension(500, 300));
-
-
-        // Añadidos de ventana inicial. 
         labelTitulo.setFont(new Font("Arial", Font.BOLD, 34));
         labelTitulo.setHorizontalAlignment(JLabel.CENTER);
         labelSubtitulo.setFont(new Font("Arial", Font.BOLD, 16));
@@ -64,24 +56,59 @@ public class VentanaInformacion extends Ventana {
         panelCabecera.add(labelTitulo);
         panelCabecera.add(labelSubtitulo);
         northPanel.add(panelCabecera);
-        
+
+        // Panel principal:
+        panelPrincipal.setPreferredSize(new Dimension(500, 250));
+        panelPrincipal.setLayout(new GridBagLayout());
+
+        GridBagConstraints restricciones = new GridBagConstraints();
+        restricciones.weightx = 1.0;
+        restricciones.weighty = 1.0;
+        restricciones.fill = GridBagConstraints.BOTH;
+        restricciones.insets = new Insets(15, 10, 15, 10);
+
         labelBeneficios.setFont(new Font("Arial", Font.BOLD, 20));
-        labelLinea1 = new JLabel("<html>El ahorcado es una excelente herramienta para aprender de forma divertida y así potenciar nuestras habilidades cognitivas, lógicas y lingüísticas."
-                + " Algunos de los beneficios de este juego son: </html");
+        labelBeneficios.setHorizontalAlignment(JLabel.LEFT);
+        restricciones.gridx = 0;
+        restricciones.gridy = 0;
+        restricciones.gridwidth = 3; 
+        restricciones.gridheight = 1;
+        panelPrincipal.add(labelBeneficios, restricciones);
+
+        labelLinea1 = new JLabel("<html><b>M e m o r a b l e</b> es un juego que permite entrenar la capacidad de codificación y de recuerdo de la información visual y espacial.</html");
         labelLinea1.setFont(new Font("Arial", Font.PLAIN, 14));
-        labelLinea2 = new JLabel("<html>* Aumenta la retentiva y desarrolla la capacidad lógica del jugador. </html");
+        restricciones.gridx = 0;
+        restricciones.gridy = 1;
+        restricciones.gridwidth = 3; 
+        restricciones.gridheight = 1;
+        panelPrincipal.add(labelLinea1, restricciones);
+
+        labelLinea2 = new JLabel("<html>Este tipo de habilidades es relevante en la práctica de algunos deportes, el reconocimiento de personas conocidas o para recordar dónde guardamos nuestras cosas.</html");
         labelLinea2.setFont(new Font("Arial", Font.PLAIN, 14));
-        labelLinea3 = new JLabel("<html>* Potencia el pensamiento creativo y la capacidad de tomar decisiones en contextos cambiantes.</html");
-        labelLinea3.setFont(new Font("Arial", Font.PLAIN, 14));
-        labelLinea4 = new JLabel("<html>* Amplía el vocabulario y mejora la ortografía. </html");
-        labelLinea4.setFont(new Font("Arial", Font.PLAIN, 14));
-        panelFinal.add(buttonVolver);
-        panelPrincipal.add(labelBeneficios);
-        panelPrincipal.add(labelLinea1);
-        panelPrincipal.add(labelLinea2);
-        panelPrincipal.add(labelLinea3);
-        panelPrincipal.add(labelLinea4);
-        panelPrincipal.add(panelFinal);
+        restricciones.gridx = 0;
+        restricciones.gridy = 2;
+        restricciones.gridwidth = 3; 
+        restricciones.gridheight = 1;
+        panelPrincipal.add(labelLinea2, restricciones);
+
+        restricciones.gridx = 0;
+        restricciones.gridy = 3;
+        restricciones.gridwidth = 1; 
+        restricciones.gridheight = 1;
+        panelPrincipal.add(new JPanel(), restricciones);
+
+        restricciones.gridx = 1;
+        restricciones.gridy = 3;
+        restricciones.gridwidth = 1; 
+        restricciones.gridheight = 1;
+        panelPrincipal.add(buttonVolver, restricciones);
+
+        restricciones.gridx = 2;
+        restricciones.gridy = 3;
+        restricciones.gridwidth = 1; 
+        restricciones.gridheight = 1;
+        panelPrincipal.add(new JPanel(), restricciones);
+
         centerPanel.add(panelPrincipal);
 
         // Mostrar Pantalla Inicial.
