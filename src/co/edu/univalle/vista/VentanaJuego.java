@@ -12,10 +12,11 @@
 
 /**
     CLASE: VentanaJuego
-    INTENCIÓN: Esta ventana muestra el juego: las palabra a divinar y las letras que hayan
-    sido usadas, también brinda información de las rondas que quedan, y las que ha jugado
-    dando una idea de los intentos restantes, todo esto con base en la información suministrada
-    en VentanaTematicas. La información recolectada del estado de juego se asocia a un jugador.
+    INTENCIÓN: Esta ventana muestra el juego: en la parte superior aparece el nombre del jugador,
+    los puntos que ha logrado y las vidas que le quedan. En la parte inferior aparece la figura/forma/color que el jugador
+    debe identificar para ganar puntos. En la parte central se encuentra el mozaico de casillas donde están las figuras
+    que el juego genera aleatoriamente. 
+
     RELACIONES:
     -Es una Ventana.
  */
@@ -116,7 +117,7 @@ import javax.swing.*;
             
             northPanel.add(panelCabecera);
 
-            
+
             // Panel central:
             centerPanel.setBackground(new Color(238, 238, 238));
             panelMatriz.setLayout(new GridLayout(4, 9, 10, 10));

@@ -1,7 +1,7 @@
 /*
     Archivo: Juego.java
     Fundamentos de Programación Orientada a Eventos - 750014C Grupo 01
-    Proyecto 1 - El ahorcado
+    Proyecto 2 - Memorable
 
     Autores: 
     Juan Camilo Narvaez Tascon - juan.narvaez.tascon@correounivalle.edu.co - 2140112-3743
@@ -15,9 +15,8 @@
 
 /**
     CLASE: Juego
-    INTENCIÓN: Esta clase se encargará de implementar la lógica del juego ahorcado.
+    INTENCIÓN: Esta clase se encargará de implementar la lógica del juego Memorable.
     RELACIONES:
-    -Conoce un jugador.
 */
 
 package co.edu.univalle.logica;
