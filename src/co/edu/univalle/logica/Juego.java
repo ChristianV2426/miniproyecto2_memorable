@@ -85,7 +85,7 @@ public class Juego {
             vidas.deleteCharAt(vidas.length()-1);
             ventanaAsociada.actualizarVidas();
         } else {
-            System.out.println("No hay más vidas");
+            System.out.println("No hay más vidas");// Texto de depuración. !!!!!!!!!!
         }
     }
  }
