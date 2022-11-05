@@ -37,11 +37,11 @@ import javax.swing.*;
         private JLabel labelUsuario = new JLabel("Jugador: Juan Narváez");
         private JLabel labelCondicionSimbolo = new JLabel();
         private JPanel panelCabecera = new JPanel();
+        private JPanel panelButtonSonido = new JPanel();
+        private JPanel panelLabelPuntuacion = new JPanel();
+        private JPanel panelLabelVidas = new JPanel();
         private JPanel panelMatriz = new JPanel();
-        private JPanel panelPrincipal = new JPanel();
         private JPanel panelFinal = new JPanel();
-        private JPanel cajaButton = new JPanel();
-        private JPanel cajaInfoCabecera = new JPanel();
         private JButton buttonSonido = new JButton("🔊"); //🔇
 
         
@@ -51,45 +51,85 @@ import javax.swing.*;
             // Pintar páneles de prueba.
             // cajaButton.setBackground(Color.blue);
             
-            // Configuración de páneles propios.
-            labelCondicionSimbolo.setText(pruebaJuego.getSimboloRonda());
-            labelVidas.setText(pruebaJuego.getVidas());
-            labelPuntuacion.setText(pruebaJuego.getPuntos());
-            
-            northPanel.setPreferredSize(new Dimension(100, 90));
-            northPanel.setBackground(new Color(79, 198, 198));
-            panelCabecera.setLayout(new GridLayout(2, 1));
-            panelCabecera.setBackground(new Color(0, 0, 0, 0));
-            cajaInfoCabecera.setLayout(new GridLayout(1, 3,40,40));
-            cajaButton.setBackground(new Color(0, 0, 0, 0));
-            southPanel.setBackground(new Color(238, 238, 238));
-            centerPanel.setBackground(new Color(238, 238, 238));
-            cajaInfoCabecera.setBackground(new Color(79, 198, 198));
-            panelMatriz.setLayout(new GridLayout(4, 9, 10, 10));
-            panelPrincipal.setLayout(new GridLayout(3, 1, 0, 5));
-            panelPrincipal.setPreferredSize(new Dimension(370, 270));
-            labelVidas.setForeground(new Color(205, 69, 69));
-            labelVidas.setFont(new Font("Arial", Font.PLAIN, 36));
-            labelCondicionTexto.setFont(new Font("Arial", Font.PLAIN, 18));
-            labelCondicionSimbolo.setFont(new Font("Arial", Font.PLAIN, 24));
+            // Panel superior:
+            northPanel.setPreferredSize(new Dimension(850, 90));
+            northPanel.setBackground(new Color(0, 165, 181));
+            panelCabecera.setPreferredSize(new Dimension(550, 70));
+            panelCabecera.setBackground(new Color(0, 165, 181));
+            panelCabecera.setLayout(new GridBagLayout());
+
+            GridBagConstraints restricciones = new GridBagConstraints();
+            restricciones.weightx = 1.0;
+            restricciones.weighty = 1.0;
+            restricciones.fill = GridBagConstraints.BOTH;
+            restricciones.insets = new Insets(5, 5, 5, 5);
+
+            restricciones.gridx = 0;
+            restricciones.gridy = 0;
+            restricciones.gridwidth = 1; 
+            restricciones.gridheight = 1;
+            JPanel panelEnBlanco1 = new JPanel();
+            panelEnBlanco1.setBackground(new Color(0, 165, 181));
+            panelCabecera.add(panelEnBlanco1, restricciones);
+        
+            restricciones.gridx = 0;
+            restricciones.gridy = 1;
+            restricciones.gridwidth = 1; 
+            restricciones.gridheight = 1;
+            panelButtonSonido.setBackground(new Color(0, 165, 181));
+            panelButtonSonido.add(buttonSonido);
+            panelCabecera.add(panelButtonSonido, restricciones);
+
+            restricciones.gridx = 0;
+            restricciones.gridy = 2;
+            restricciones.gridwidth = 1; 
+            restricciones.gridheight = 1;
+            JPanel panelEnBlanco2 = new JPanel();
+            panelEnBlanco2.setBackground(new Color(0, 165, 181));
+            panelCabecera.add(panelEnBlanco2, restricciones);
+    
+            restricciones.gridx = 1;
+            restricciones.gridy = 1;
+            restricciones.gridwidth = 1; 
+            restricciones.gridheight = 1;
+            panelLabelPuntuacion.setBackground(new Color(0, 165, 181));
+            panelLabelPuntuacion.setMinimumSize(new Dimension(350, 0));
+            panelLabelPuntuacion.setLayout(new GridLayout(1, 1));
             labelPuntuacion.setFont(new Font("Arial", Font.PLAIN, 24));
+            labelPuntuacion.setHorizontalAlignment(JLabel.CENTER);
+            labelPuntuacion.setText(pruebaJuego.getPuntos());
+            panelLabelPuntuacion.add(labelPuntuacion);
+            panelCabecera.add(panelLabelPuntuacion, restricciones);
+
+            restricciones.gridx = 2;
+            restricciones.gridy = 1;
+            restricciones.gridwidth = 1; 
+            restricciones.gridheight = 1;
+            panelLabelVidas.setLayout(new GridLayout(1, 1));
+            panelLabelVidas.setMinimumSize(new Dimension(50, 0));
+            labelVidas.setFont(new Font("Arial", Font.PLAIN, 36));
             labelVidas.setHorizontalAlignment(JLabel.CENTER);
-            cajaInfoCabecera.setPreferredSize(new Dimension(650, 80));
- 
-
-            // Añadidos de ventana inicial. 
-            actualizarCasillas();
-
-            cajaButton.add(buttonSonido);
-            cajaInfoCabecera.add(cajaButton);
-            cajaInfoCabecera.add(labelPuntuacion);
-            cajaInfoCabecera.add(labelVidas);
-            panelCabecera.add(cajaInfoCabecera);
-            panelFinal.add(labelCondicionTexto);
-            panelFinal.add(labelCondicionSimbolo);
+            labelVidas.setForeground(new Color(205, 69, 69));
+            labelVidas.setText(pruebaJuego.getVidas());
+            panelLabelVidas.add(labelVidas);
+            panelCabecera.add(panelLabelVidas, restricciones);          
             
             northPanel.add(panelCabecera);
+
+            
+            // Panel central:
+            centerPanel.setBackground(new Color(238, 238, 238));
+            panelMatriz.setLayout(new GridLayout(4, 9, 10, 10));
+            actualizarCasillas();
             centerPanel.add(panelMatriz);
+
+            // Panel inferior:
+            southPanel.setBackground(new Color(238, 238, 238));
+            labelCondicionTexto.setFont(new Font("Arial", Font.PLAIN, 18));
+            labelCondicionSimbolo.setText(pruebaJuego.getSimboloRonda());
+            labelCondicionSimbolo.setFont(new Font("Arial", Font.PLAIN, 24));
+            panelFinal.add(labelCondicionTexto);
+            panelFinal.add(labelCondicionSimbolo);
             southPanel.add(panelFinal);
 
             // Mostrar Pantalla Inicial.

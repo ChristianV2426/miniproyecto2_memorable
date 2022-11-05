@@ -63,7 +63,7 @@ public class Casilla implements MouseListener{
         labelSymbolo.setHorizontalAlignment(JLabel.CENTER);
         labelSymbolo.setFont(new Font("Arial", Font.PLAIN, 36));
         recuadro.setLayout(new GridLayout(1, 1));
-        recuadro.setBackground(new Color(79, 198, 198));
+        recuadro.setBackground(new Color(0, 165, 181));
         recuadro.addMouseListener(this);
         recuadro.add(labelSymbolo);
         return recuadro;
