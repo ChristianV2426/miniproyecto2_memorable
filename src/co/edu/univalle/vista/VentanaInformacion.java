@@ -30,7 +30,7 @@ import javax.swing.*;
 public class VentanaInformacion extends Ventana {
     // Atributos:
     private JLabel labelTitulo = new JLabel("M E M O R A B L E");
-    private JLabel labelSubtitulo = new JLabel("Universidad del Valle");
+    private JLabel labelSubtitulo = new JLabel("¿Para qué sirve?");
     private JLabel labelBeneficios = new JLabel("Beneficios de este juego:");    
     private JLabel labelLinea1;
     private JLabel labelLinea2;
@@ -46,7 +46,7 @@ public class VentanaInformacion extends Ventana {
 		
         // Panel superior:
         northPanel.setPreferredSize(new Dimension(850, 90));
-        northPanel.setBackground(new Color(0, 157, 113));
+        northPanel.setBackground(new Color(0, 165, 181));
         panelCabecera.setLayout(new GridLayout(2, 1));
         panelCabecera.setBackground(new Color(0, 0, 0, 0));
         labelTitulo.setFont(new Font("Arial", Font.BOLD, 34));

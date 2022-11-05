@@ -29,61 +29,166 @@ import javax.swing.*;
 
 public class VentanaInstrucciones extends Ventana {
     // Atributos:
-    private JLabel labelTitulo = new JLabel("El Ahorcado");
-    private JLabel labelSubtitulo = new JLabel("Universidad del Valle");
-    private JLabel labelInstrucciones = new JLabel("Instrucciones:");    
-    private JLabel labelPrimeraInstruccion;
-    private JLabel labelSegundaInstruccion;
+    private JLabel labelTitulo = new JLabel("M E M O R A B L E");
+    private JLabel labelSubtitulo = new JLabel("Instrucciones");
+    private JLabel labelInstruccion = new JLabel();
     private JPanel panelCabecera = new JPanel();
     private JPanel panelPrincipal = new JPanel();
-    private JPanel panelFinal = new JPanel();
+    private JPanel panelButtonVolver = new JPanel();
+    private JPanel panelButtonAnterior = new JPanel();
+    private JPanel panelButtonSiguiente = new JPanel();
+    private JPanel panelImagen = new JPanel();
+    private JPanel panelLabelInstruccion = new JPanel();
     private JButton buttonVolver = new JButton("Volver");
+    private JButton buttonAnterior = new JButton("Anterior");
+    private JButton buttonSiguiente = new JButton("Siguiente");
+    private int numeroDeInstruccion;
+    private ImageIcon imagenInstruccion;
     
     // Constructor:
     public VentanaInstrucciones(){
         
         // Listeners:
         buttonVolver.addActionListener(this);
-		
-        // Configuración de páneles propios.
-        northPanel.setPreferredSize(new Dimension(100, 90));
-        northPanel.setBackground(new Color(79, 198, 198));
+        buttonAnterior.addActionListener(this);
+        buttonSiguiente.addActionListener(this);
+
+        // Panel superior:
+        northPanel.setPreferredSize(new Dimension(850, 70));
+        northPanel.setBackground(new Color(0, 165, 181));
         panelCabecera.setLayout(new GridLayout(2, 1));
         panelCabecera.setBackground(new Color(0, 0, 0, 0));
-        panelPrincipal.setLayout(new GridLayout(5, 1, 0, 5));
-        panelPrincipal.setPreferredSize(new Dimension(370, 270));
-
-        // Añadidos de ventana inicial. 
-        labelTitulo.setFont(new Font("Arial", Font.BOLD, 34));
+        labelTitulo.setFont(new Font("Arial", Font.BOLD, 30));
         labelTitulo.setHorizontalAlignment(JLabel.CENTER);
         labelSubtitulo.setFont(new Font("Arial", Font.BOLD, 16));
         labelSubtitulo.setHorizontalAlignment(JLabel.CENTER);
         panelCabecera.add(labelTitulo);
         panelCabecera.add(labelSubtitulo);
         northPanel.add(panelCabecera);
-        
-        labelInstrucciones.setFont(new Font("Arial", Font.BOLD, 20));
-        labelPrimeraInstruccion = new JLabel("<html>* Haz clic con el mouse sobre las letras del abecedario para adivinar la palabra escondida.</html>");
-        labelPrimeraInstruccion.setFont(new Font("Arial", Font.PLAIN, 14));
-        labelSegundaInstruccion = new JLabel("<html>* A medida que vas adivinando la palabra, las letras cambiarán de color: el verde indica que la letra sí hace parte de la palabra y el rojo indica lo contrario.</html>");
-        labelSegundaInstruccion.setFont(new Font("Arial", Font.PLAIN, 14));
-        panelFinal.add(buttonVolver);
-        panelPrincipal.add(labelInstrucciones);
-        panelPrincipal.add(labelPrimeraInstruccion);
-        panelPrincipal.add(labelSegundaInstruccion);
-        panelPrincipal.add(new JPanel());
-        panelPrincipal.add(panelFinal);
+
+        // Panel principal:
+        panelPrincipal.setPreferredSize(new Dimension(600, 350));
+        panelPrincipal.setLayout(new GridBagLayout());
+
+        GridBagConstraints restricciones = new GridBagConstraints();
+        restricciones.weightx = 1.0;
+        restricciones.weighty = 1.0;
+        restricciones.fill = GridBagConstraints.BOTH;
+        restricciones.insets = new Insets(10, 10, 10, 10);
+
+        restricciones.gridx = 2;
+        restricciones.gridy = 0;
+        restricciones.gridwidth = 1; 
+        restricciones.gridheight = 1;
+        panelButtonVolver.add(buttonVolver);
+        panelPrincipal.add(panelButtonVolver, restricciones);
+
+        restricciones.gridx = 0;
+        restricciones.gridy = 1;
+        restricciones.gridwidth = 1; 
+        restricciones.gridheight = 1;
+        panelPrincipal.add(new JPanel(), restricciones);
+
+        restricciones.gridx = 2;
+        restricciones.gridy = 2;
+        restricciones.gridwidth = 1; 
+        restricciones.gridheight = 1;
+        panelButtonSiguiente.add(buttonSiguiente);
+        panelPrincipal.add(panelButtonSiguiente, restricciones);
+
+        restricciones.gridx = 0;
+        restricciones.gridy = 2;
+        restricciones.gridwidth = 1; 
+        restricciones.gridheight = 1;
+        panelButtonAnterior.add(buttonAnterior);
+        panelPrincipal.add(panelButtonAnterior, restricciones);
+
+        restricciones.gridx = 0;
+        restricciones.gridy = 3;
+        restricciones.gridwidth = 1; 
+        restricciones.gridheight = 1;
+        panelPrincipal.add(new JPanel(), restricciones);
+
+        restricciones.gridx = 1;
+        restricciones.gridy = 0;
+        restricciones.gridwidth = 1; 
+        restricciones.gridheight = 4;
+        panelPrincipal.add(panelImagen, restricciones);
+
+        restricciones.gridx = 0;
+        restricciones.gridy = 4;
+        restricciones.gridwidth = 3; 
+        restricciones.gridheight = 1;
+        labelInstruccion.setFont(new Font("Arial", Font.PLAIN, 14));
+        panelLabelInstruccion.setMinimumSize(new Dimension(600, 70));;
+        panelLabelInstruccion.setLayout(new GridLayout(1, 1));
+        panelLabelInstruccion.add(labelInstruccion);
+        panelPrincipal.add(panelLabelInstruccion, restricciones);
+
         centerPanel.add(panelPrincipal);
+
+        // Cargar componentes dinámicos
+        numeroDeInstruccion = 1;
+        cargarComponentesDinamicos(numeroDeInstruccion);
 
         // Mostrar Pantalla Inicial.
         setVisible(true);
-    }   
+    }
+
+    public void cargarComponentesDinamicos(int numeroDeInstruccion){
+        // Cambiar la imagen que ejemplifica la instrucción
+        try{
+            imagenInstruccion = new ImageIcon(getClass().getResource("imagenes/instruccion" + numeroDeInstruccion + ".png"));
+            } catch (Exception exception){
+                System.out.println("No se pudo cargar la imagen");
+            }
+            panelImagen.removeAll();
+            panelImagen.add(new JLabel(imagenInstruccion));
+        
+        // Cambiar el texto de la instrucción
+        switch (numeroDeInstruccion){
+            case 1:
+                labelInstruccion.setText("<html>En <b>M e m o r a b l e</b> aparecerán una serie de figuras de distintos colores sobre un mozaico de fichas."
+                + " Al cabo de unos segundos las figuras desaparecerán y tendrás que responder a una pregunta.</html");
+                buttonAnterior.setEnabled(false);
+                break;
+            
+            case 2: 
+                labelInstruccion.setText("<html>La pregunta aparecerá en la parte inferior de la pantalla, y para responderla debes dar clic sobre la ficha que cumpla la condición preguntada.</html");
+                buttonAnterior.setEnabled(true);
+                break;
+            
+            case 3: 
+                labelInstruccion.setText("<html><b>Debes de estar atento </b> porque es posible que tengas que pulsar más de una ficha...</html");
+                break;
+
+            case 4: 
+                labelInstruccion.setText("<html>En el ejemplo en pantalla se pide encontrar todas las figuras en color azul,"
+                + " por lo que hay que dar clic sobre las 3 fichas que contienen figuras de color azul.</html");
+                buttonSiguiente.setEnabled(true);
+                break;
+            
+            case 5:
+                labelInstruccion.setText("<html>Es importante que memorices la forma, el color y la posición de cada ficha."
+                + " Haz tu mejor esfuerzo y logra algo <b>M e m o r a b l e</b>.</html");
+                buttonSiguiente.setEnabled(false);
+                break;
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent evento){
         if (evento.getSource() == buttonVolver){
             dispose();
             VentanaInicio ventana = new VentanaInicio(); 
+
+        } else if (evento.getSource() == buttonSiguiente){
+            numeroDeInstruccion++;
+            cargarComponentesDinamicos(numeroDeInstruccion);
+
+        } else if (evento.getSource() == buttonAnterior){
+            numeroDeInstruccion--;
+            cargarComponentesDinamicos(numeroDeInstruccion);
         }
     }
 }

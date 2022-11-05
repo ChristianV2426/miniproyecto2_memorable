@@ -56,7 +56,7 @@ public class VentanaInicio extends Ventana {
         northPanel.setPreferredSize(new Dimension(850, 70));
         northPanel.setLayout(new GridLayout(1, 2));
         panelCabecera.setLayout(new GridLayout(4, 1));
-        panelCabecera.setBackground(new Color(0, 157, 113));
+        panelCabecera.setBackground(new Color(0, 165, 181));
         labelTitulo.setFont(new Font("Arial", Font.BOLD, 12));
         labelTitulo.setHorizontalAlignment(JLabel.LEFT);
         labelSubtitulo.setFont(new Font("Arial", Font.BOLD, 12));
