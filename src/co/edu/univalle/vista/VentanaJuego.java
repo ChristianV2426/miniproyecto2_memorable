@@ -30,11 +30,12 @@ import javax.swing.*;
 
     // Atributos:
     public class VentanaJuego extends Ventana {
-        private JLabel labelPuntuacion = new JLabel("Puntuación: 0000");
-        private JLabel labelVidas = new JLabel("♥♥♥");
+        private JLabel labelPuntuacion = new JLabel();
+        private JLabel labelVidas = new JLabel();
         private JLabel labelCondicionTexto = new JLabel("Busque las palabras con la siguiente condición:");
+        private Juego pruebaJuego = new Juego(0, this);
         private JLabel labelUsuario = new JLabel("Jugador: Juan Narváez");
-        private JLabel labelCondicionSimbolo = new JLabel("♣️");
+        private JLabel labelCondicionSimbolo = new JLabel();
         private JPanel panelCabecera = new JPanel();
         private JPanel panelMatriz = new JPanel();
         private JPanel panelPrincipal = new JPanel();
@@ -47,19 +48,23 @@ import javax.swing.*;
         // Constructor:
         public VentanaJuego(){
             // Listeners:
-
             // Pintar páneles de prueba.
             // cajaButton.setBackground(Color.blue);
             
             // Configuración de páneles propios.
+            labelCondicionSimbolo.setText(pruebaJuego.getSimboloRonda());
+            labelVidas.setText(pruebaJuego.getVidas());
+            labelPuntuacion.setText(pruebaJuego.getPuntos());
+            
             northPanel.setPreferredSize(new Dimension(100, 90));
             northPanel.setBackground(new Color(79, 198, 198));
-            
             panelCabecera.setLayout(new GridLayout(2, 1));
             panelCabecera.setBackground(new Color(0, 0, 0, 0));
             cajaInfoCabecera.setLayout(new GridLayout(1, 3,40,40));
             cajaButton.setBackground(new Color(0, 0, 0, 0));
-            cajaInfoCabecera.setBackground(new Color(0, 0, 0, 0));
+            southPanel.setBackground(new Color(238, 238, 238));
+            centerPanel.setBackground(new Color(238, 238, 238));
+            cajaInfoCabecera.setBackground(new Color(79, 198, 198));
             panelMatriz.setLayout(new GridLayout(4, 9, 10, 10));
             panelPrincipal.setLayout(new GridLayout(3, 1, 0, 5));
             panelPrincipal.setPreferredSize(new Dimension(370, 270));
@@ -73,11 +78,7 @@ import javax.swing.*;
  
 
             // Añadidos de ventana inicial. 
-            for(int recuadros = 0; recuadros < 36; recuadros++) {
-                Casilla recuadro = new Casilla();
-                panelMatriz.add(recuadro.pintar());
-
-            }
+            actualizarCasillas();
 
             cajaButton.add(buttonSonido);
             cajaInfoCabecera.add(cajaButton);
@@ -94,6 +95,26 @@ import javax.swing.*;
             // Mostrar Pantalla Inicial.
             setVisible(true);
     }   
+
+    public void actualizarVidas(){
+        labelVidas.setText(pruebaJuego.getVidas());
+        
+    }
+
+    public void actualizarPuntos(){
+        labelPuntuacion.setText(pruebaJuego.getPuntos());
+    }
+
+    public void actualizarCasillas(){
+        panelMatriz.removeAll();
+        pruebaJuego.nuevaRonda();
+        labelCondicionSimbolo.setText(pruebaJuego.getSimboloRonda());
+        
+        for(int recuadros = 0; recuadros < 36; recuadros++) {
+            Casilla recuadro = new Casilla(pruebaJuego);
+            panelMatriz.add(recuadro.pintar());
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
