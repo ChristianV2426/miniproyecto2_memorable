@@ -11,23 +11,25 @@ public class Casilla implements MouseListener{
     static private int contadorId = 0;
     private Random random = new Random();
     static private int contadorNivelacion = 0;
-    static Boolean correcionPorcentaje = true;
-    static Boolean simboloCondicionImpreso = false;
-    static int probabilidadImpresion = 30;
-
+    static private Boolean correcionPorcentaje = true;
+    static private Boolean simboloCondicionImpreso = false;
+    static private int probabilidadImpresion = 30;
+    private JPanel recuadro = new JPanel();
+    
     /*  El tener un registro de qué ronda se está jugando
     permitirá ir aumentando la dificultad. */ 
     static private Juego pruebaJuego;
-
+    
     public Casilla(Juego pruebaJuego){
         this.pruebaJuego = pruebaJuego;
+
         int numeroSimbolosAPintar = pruebaJuego.getRondaAsociada()+1;
-        int rondaAsociada = pruebaJuego.getRondaAsociada();
+        // int rondaAsociada = pruebaJuego.getRondaAsociada();
         /* Con base en el número de casillas (36), y el número de elementos que pueden ser
          * pintados (4), se considera el número 30 como una buena estimación probabilística 
          * para el correcto funcinamiento de los símbolos pintados. */
         int simboloAPintar = random.nextInt(probabilidadImpresion); // Funciona como valor probabilístico.
-
+        
         if (contadorId < 36){
             // Se asegura de que por lo menos se pinte una vez.
             if(contadorNivelacion != numeroSimbolosAPintar-1 && contadorId > 17 && correcionPorcentaje) {
@@ -39,10 +41,12 @@ public class Casilla implements MouseListener{
                 simbolo = simbolos[simboloAPintar];
                 if (simbolo == pruebaJuego.getSimboloRonda()) {
                     simboloCondicionImpreso = true;
+                    pruebaJuego.aumentarContadorCondicion();
                 } else if (simboloCondicionImpreso == false && contadorNivelacion == numeroSimbolosAPintar-1) {
                     /* Si no se ha asignado el símbolo de condición, y ya estamos en la última casilla, entonces 
-                     * asignelo a esa última casilla */
+                    * asignelo a esa última casilla */
                     simbolo = pruebaJuego.getSimboloRonda();
+                    pruebaJuego.aumentarContadorCondicion();
                 }
                 contadorNivelacion++;
             } else {
@@ -53,10 +57,9 @@ public class Casilla implements MouseListener{
             contadorId++;
         }
     }
-
+    
     // Métodos.
     public JPanel pintar() {
-        JPanel recuadro = new JPanel();
         JLabel labelSymbolo = new JLabel(simbolo);
         recuadro.setCursor(new Cursor(Cursor.HAND_CURSOR));
         recuadro.setPreferredSize(new Dimension(50, 50));
@@ -88,9 +91,10 @@ public class Casilla implements MouseListener{
         resetCasillas();
         pruebaJuego.getSimboloRonda();
         pruebaJuego.aciertoSimbolo(getSimbolo());
-        // System.out.println("Símbolo presionado: " + getSimbolo());// Texto de depuración. !!!!!!!!!!
-        // System.out.println("Símbolo condición: " + pruebaJuego.getSimboloRonda());// Texto de depuración. !!!!!!!!!!
-        // System.out.println("Es el mismo: " + pruebaJuego.aciertoSimbolo(getSimbolo()));// Texto de depuración. !!!!!!!!!!
+        
+        recuadro.setBackground(new Color(63, 255, 56));
+        recuadro.removeMouseListener(this);
+        recuadro.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     @Override

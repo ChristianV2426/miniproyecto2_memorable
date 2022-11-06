@@ -35,8 +35,9 @@ public class Juego {
     private String palabraAAdivinar;
     private Random random = new Random();
     private String nombreDelJugador;
-    private String[] simbolos = {"♠","♣", "♥", "♦"}; 
-
+    private String[] simbolos = {"♠","♣", "♥", "♦"};
+    private int contadorSimbolosCondicion = 0;
+    private int verificarSimbolosCondicion = 0;
     private int rondaAsociada = 0;
     
     //Métodos:
@@ -50,6 +51,11 @@ public class Juego {
     public void nuevaRonda() {
         palabraAAdivinar = simbolos[random.nextInt(4)];
         rondaAsociada += 1;
+        contadorSimbolosCondicion = 0;
+    }
+
+    public void aumentarContadorCondicion(){
+        contadorSimbolosCondicion++;
     }
 
     public int getRondaAsociada(){
@@ -62,11 +68,16 @@ public class Juego {
 
     public Boolean aciertoSimbolo(String simbolo1){
         if(simbolo1 == palabraAAdivinar){
-            sumarPuntos();
+            verificarSimbolosCondicion++;
+            if(verificarSimbolosCondicion == contadorSimbolosCondicion) {
+                sumarPuntos();
+                verificarSimbolosCondicion = 0;
+            }
             return true;
         } else {
             restarVida();
-            return false;
+            verificarSimbolosCondicion = 0;
+            return true;
         }
     }
 
@@ -83,12 +94,14 @@ public class Juego {
         puntuacion += 100;
         ventanaAsociada.actualizarPuntos();
         ventanaAsociada.actualizarCasillas();
+        
     }
     
     private void restarVida(){
         if(vidas.length() > 0) {
             vidas.deleteCharAt(vidas.length()-1);
             ventanaAsociada.actualizarVidas();
+            rondaAsociada -= 1; // Evita que aumente la dificultad al perder vidas.
             ventanaAsociada.actualizarCasillas();
         } else {
             System.out.println("No hay más vidas");// Texto de depuración. !!!!!!!!!!
