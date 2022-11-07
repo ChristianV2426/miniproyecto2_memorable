@@ -1,3 +1,24 @@
+/*
+    Archivo: Casilla.java
+    Fundamentos de Programación Orientada a Eventos - 750014C Grupo 01
+    Proyecto 2 - Memorable
+
+    Autores: 
+    Juan Camilo Narvaez Tascon - juan.narvaez.tascon@correounivalle.edu.co - 2140112-3743
+    Christian David Vargas Gutiérrez - vargas.christian@correounivalle.edu.co - 2179172-3743
+
+    Profesor:
+    Ing. M.Sc. Luis Yovany Romo Portilla
+
+    Licencia: GNU-GPL
+*/
+
+/**
+    CLASE: Casilla
+    INTENCIÓN: Esta clase se comporta como un objeto para cada casilla pintada, y manipula los atributos internos.
+    RELACIONES: conoce a Juego y VentanaJuego.
+*/
+
 package co.edu.univalle.logica;
 
 import java.awt.*;
@@ -13,8 +34,10 @@ public class Casilla implements MouseListener{
     static private int contadorNivelacion = 0;
     static private Boolean correcionPorcentaje = true;
     static private Boolean simboloCondicionImpreso = false;
+    static private Boolean simboloCondicionColor = false;
     static private int probabilidadImpresion = 30;
     private JPanel recuadro = new JPanel();
+    private JLabel labelSymbolo = new JLabel();
     
     /*  El tener un registro de qué ronda se está jugando
     permitirá ir aumentando la dificultad. */ 
@@ -22,12 +45,13 @@ public class Casilla implements MouseListener{
     
     public Casilla(Juego pruebaJuego){
         this.pruebaJuego = pruebaJuego;
-
+        
+        
         int numeroSimbolosAPintar = pruebaJuego.getRondaAsociada()+1;
         // int rondaAsociada = pruebaJuego.getRondaAsociada();
         /* Con base en el número de casillas (36), y el número de elementos que pueden ser
-         * pintados (4), se considera el número 30 como una buena estimación probabilística 
-         * para el correcto funcinamiento de los símbolos pintados. */
+        * pintados (4), se considera el número 30 como una buena estimación probabilística 
+        * para el correcto funcinamiento de los símbolos pintados. */
         int simboloAPintar = random.nextInt(probabilidadImpresion); // Funciona como valor probabilístico.
         
         if (contadorId < 36){
@@ -38,6 +62,9 @@ public class Casilla implements MouseListener{
             }
             // Se asignan los símbolos a cada casilla.
             if (simboloAPintar >= 0 && simboloAPintar <= 3 && contadorNivelacion < numeroSimbolosAPintar) {
+                Color colorPintadoSimbolo = pruebaJuego.getRandomColor();
+                labelSymbolo.setForeground(colorPintadoSimbolo);
+
                 simbolo = simbolos[simboloAPintar];
                 if (simbolo == pruebaJuego.getSimboloRonda()) {
                     simboloCondicionImpreso = true;
@@ -49,10 +76,18 @@ public class Casilla implements MouseListener{
                     pruebaJuego.aumentarContadorCondicion();
                 }
                 contadorNivelacion++;
+                
+                // Debugger ----------------------------------------------
+                System.out.println(colorPintadoSimbolo);
+    
+                if (colorPintadoSimbolo == pruebaJuego.getColorRonda())
+                    System.out.println("¡Es el mismo!");
+                // -------------------------------------------------------
+
             } else {
                 simbolo = simbolos[4];
-            }
-            // System.out.println("Símbolo asignado: " + simbolo); // Texto de depuración. !!!!!!!!!!
+            } // ¿y si hay una probabilidad de 2/3?
+        
 
             contadorId++;
         }
@@ -60,7 +95,8 @@ public class Casilla implements MouseListener{
     
     // Métodos.
     public JPanel pintar() {
-        JLabel labelSymbolo = new JLabel(simbolo);
+        labelSymbolo.setText(simbolo);
+        // labelSymbolo.setForeground(colorPintadoSimbolo);
         recuadro.setCursor(new Cursor(Cursor.HAND_CURSOR));
         recuadro.setPreferredSize(new Dimension(50, 50));
         labelSymbolo.setHorizontalAlignment(JLabel.CENTER);
@@ -77,6 +113,7 @@ public class Casilla implements MouseListener{
         contadorNivelacion = 0;
         correcionPorcentaje = true;
         simboloCondicionImpreso = false;
+        simboloCondicionColor = false;
         probabilidadImpresion = 30;
     }
 

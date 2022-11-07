@@ -24,7 +24,11 @@ package co.edu.univalle.logica;
 
 import co.edu.univalle.vista.VentanaJuego;
 
+import java.awt.Color;
 import java.util.*;
+
+import javax.swing.text.AttributeSet.ColorAttribute;
+import javax.swing.text.StyleConstants.ColorConstants;
 
 public class Juego {
     //Atributos:
@@ -33,9 +37,12 @@ public class Juego {
     private int puntuacion = 0;
     private String stringPuntuacion;
     private String palabraAAdivinar;
+    private Color colorAAdividar;
     private Random random = new Random();
     private String nombreDelJugador;
     private String[] simbolos = {"♠","♣", "♥", "♦"};
+    // Negro, morado, verde, azul, coral.
+    private Color[] colores = {new Color(0,0,0), new Color(148,41,255), new Color(29,217,9), new Color(57,62,219), new Color(255,122,82)};
     private int contadorSimbolosCondicion = 0;
     private int verificarSimbolosCondicion = 0;
     private int rondaAsociada = 0;
@@ -44,12 +51,18 @@ public class Juego {
     public Juego(int rondaAsociada, VentanaJuego ventanaAsociada) {
         this.ventanaAsociada = ventanaAsociada;
         palabraAAdivinar = simbolos[random.nextInt(4)];
+        colorAAdividar = getRandomColor();
         this.rondaAsociada = rondaAsociada;
         this.nombreDelJugador = nombreDelJugador;
     }
 
+    public Color getRandomColor() {
+        return colores[random.nextInt(5)];
+    }
+
     public void nuevaRonda() {
         palabraAAdivinar = simbolos[random.nextInt(4)];
+        colorAAdividar = colores[random.nextInt(5)];
         rondaAsociada += 1;
         contadorSimbolosCondicion = 0;
     }
@@ -64,6 +77,10 @@ public class Juego {
 
     public String getSimboloRonda() {
         return palabraAAdivinar;
+    }
+
+    public Color getColorRonda() {
+        return colorAAdividar;
     }
 
     public Boolean aciertoSimbolo(String simbolo1){
@@ -94,7 +111,7 @@ public class Juego {
         puntuacion += 100;
         ventanaAsociada.actualizarPuntos();
         ventanaAsociada.actualizarCasillas();
-        
+        ventanaAsociada.actualizarColores();
     }
     
     private void restarVida(){
@@ -103,6 +120,7 @@ public class Juego {
             ventanaAsociada.actualizarVidas();
             rondaAsociada -= 1; // Evita que aumente la dificultad al perder vidas.
             ventanaAsociada.actualizarCasillas();
+            ventanaAsociada.actualizarColores();
         } else {
             System.out.println("No hay más vidas");// Texto de depuración. !!!!!!!!!!
         }

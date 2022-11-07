@@ -27,6 +27,8 @@ import co.edu.univalle.logica.*;
 import java.awt.*;
 // import java.util.*;
 import java.awt.event.*;
+import java.util.Random;
+
 import javax.swing.*;
 
     // Atributos:
@@ -40,6 +42,7 @@ import javax.swing.*;
         private JPanel panelCabecera = new JPanel();
         private JPanel panelButtonSonido = new JPanel();
         private JPanel panelLabelPuntuacion = new JPanel();
+        private Random random = new Random();
         private JPanel panelLabelVidas = new JPanel();
         private JPanel panelMatriz = new JPanel();
         private JPanel panelFinal = new JPanel();
@@ -117,7 +120,6 @@ import javax.swing.*;
             
             northPanel.add(panelCabecera);
 
-
             // Panel central:
             centerPanel.setBackground(new Color(238, 238, 238));
             panelMatriz.setLayout(new GridLayout(4, 9, 10, 10));
@@ -129,21 +131,24 @@ import javax.swing.*;
             labelCondicionTexto.setFont(new Font("Arial", Font.PLAIN, 18));
             labelCondicionSimbolo.setText(pruebaJuego.getSimboloRonda());
             labelCondicionSimbolo.setFont(new Font("Arial", Font.PLAIN, 24));
+            labelCondicionSimbolo.setForeground(pruebaJuego.getColorRonda());
             panelFinal.add(labelCondicionTexto);
             panelFinal.add(labelCondicionSimbolo);
             southPanel.add(panelFinal);
-
             // Mostrar Pantalla Inicial.
             setVisible(true);
     }   
 
     public void actualizarVidas(){
         labelVidas.setText(pruebaJuego.getVidas());
-        
     }
 
     public void actualizarPuntos(){
         labelPuntuacion.setText(pruebaJuego.getPuntos());
+    }
+
+    public void actualizarColores(){
+        labelCondicionSimbolo.setForeground(pruebaJuego.getColorRonda());
     }
 
     public void actualizarCasillas(){
