@@ -41,8 +41,8 @@ public class Juego {
     private Random random = new Random();
     private String nombreDelJugador;
     private String[] simbolos = {"♠","♣", "♥", "♦"};
-    // Negro, morado, verde, azul, coral.
-    private Color[] colores = {new Color(0,0,0), new Color(148,41,255), new Color(29,217,9), new Color(57,62,219), new Color(255,122,82)};
+    // Negro, morado, verde, azul.
+    private Color[] colores = {new Color(0,0,0), new Color(148,41,255), new Color(29,217,9), new Color(57,62,219)};
     private int contadorSimbolosCondicion = 0;
     private int verificarSimbolosCondicion = 0;
     private int rondaAsociada = 0;
@@ -57,18 +57,19 @@ public class Juego {
     }
 
     public Color getRandomColor() {
-        return colores[random.nextInt(5)];
+        return colores[random.nextInt(4)];
     }
 
     public void nuevaRonda() {
         palabraAAdivinar = simbolos[random.nextInt(4)];
-        colorAAdividar = colores[random.nextInt(5)];
+        colorAAdividar = colores[random.nextInt(4)];
         rondaAsociada += 1;
         contadorSimbolosCondicion = 0;
     }
 
     public void aumentarContadorCondicion(){
         contadorSimbolosCondicion++;
+        
     }
 
     public int getRondaAsociada(){
@@ -83,9 +84,10 @@ public class Juego {
         return colorAAdividar;
     }
 
-    public Boolean aciertoSimbolo(String simbolo1){
-        if(simbolo1 == palabraAAdivinar){
+    public Boolean aciertoSimbolo(String simbolo1, Color color){
+        if(simbolo1 == palabraAAdivinar && color == colorAAdividar){
             verificarSimbolosCondicion++;
+            System.out.println("contadorSimbolosCondicion: " + contadorSimbolosCondicion);
             if(verificarSimbolosCondicion == contadorSimbolosCondicion) {
                 sumarPuntos();
                 verificarSimbolosCondicion = 0;

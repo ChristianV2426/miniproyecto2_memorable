@@ -34,10 +34,10 @@ public class Casilla implements MouseListener{
     static private int contadorNivelacion = 0;
     static private Boolean correcionPorcentaje = true;
     static private Boolean simboloCondicionImpreso = false;
-    static private Boolean simboloCondicionColor = false;
     static private int probabilidadImpresion = 30;
     private JPanel recuadro = new JPanel();
     private JLabel labelSymbolo = new JLabel();
+    private Color colorPintadoLabel;
     
     /*  El tener un registro de qué ronda se está jugando
     permitirá ir aumentando la dificultad. */ 
@@ -63,32 +63,28 @@ public class Casilla implements MouseListener{
             // Se asignan los símbolos a cada casilla.
             if (simboloAPintar >= 0 && simboloAPintar <= 3 && contadorNivelacion < numeroSimbolosAPintar) {
                 Color colorPintadoSimbolo = pruebaJuego.getRandomColor();
+                setColorPintado(colorPintadoSimbolo);
                 labelSymbolo.setForeground(colorPintadoSimbolo);
 
                 simbolo = simbolos[simboloAPintar];
-                if (simbolo == pruebaJuego.getSimboloRonda()) {
+                if ((simbolo == pruebaJuego.getSimboloRonda()) && (colorPintadoSimbolo == pruebaJuego.getColorRonda())) {
+                    // Se debe arreglar la condición, puesto que se rompe a partir de 1000
                     simboloCondicionImpreso = true;
                     pruebaJuego.aumentarContadorCondicion();
                 } else if (simboloCondicionImpreso == false && contadorNivelacion == numeroSimbolosAPintar-1) {
                     /* Si no se ha asignado el símbolo de condición, y ya estamos en la última casilla, entonces 
                     * asignelo a esa última casilla */
+                    labelSymbolo.setForeground(pruebaJuego.getColorRonda());
                     simbolo = pruebaJuego.getSimboloRonda();
+                    setColorPintado(pruebaJuego.getColorRonda());
                     pruebaJuego.aumentarContadorCondicion();
                 }
                 contadorNivelacion++;
-                
-                // Debugger ----------------------------------------------
-                System.out.println(colorPintadoSimbolo);
-    
-                if (colorPintadoSimbolo == pruebaJuego.getColorRonda())
-                    System.out.println("¡Es el mismo!");
-                // -------------------------------------------------------
 
             } else {
                 simbolo = simbolos[4];
             } // ¿y si hay una probabilidad de 2/3?
         
-
             contadorId++;
         }
     }
@@ -96,7 +92,6 @@ public class Casilla implements MouseListener{
     // Métodos.
     public JPanel pintar() {
         labelSymbolo.setText(simbolo);
-        // labelSymbolo.setForeground(colorPintadoSimbolo);
         recuadro.setCursor(new Cursor(Cursor.HAND_CURSOR));
         recuadro.setPreferredSize(new Dimension(50, 50));
         labelSymbolo.setHorizontalAlignment(JLabel.CENTER);
@@ -113,12 +108,19 @@ public class Casilla implements MouseListener{
         contadorNivelacion = 0;
         correcionPorcentaje = true;
         simboloCondicionImpreso = false;
-        simboloCondicionColor = false;
         probabilidadImpresion = 30;
     }
 
     public String getSimbolo() {
         return simbolo;
+    }
+
+    public Color getColor() {
+        return colorPintadoLabel;
+    }
+
+    private void setColorPintado(Color color) {
+        colorPintadoLabel = color;
     }
 
     // Mouse Listener
@@ -127,8 +129,7 @@ public class Casilla implements MouseListener{
         // TODO Auto-generated method stub
         resetCasillas();
         pruebaJuego.getSimboloRonda();
-        pruebaJuego.aciertoSimbolo(getSimbolo());
-        
+        pruebaJuego.aciertoSimbolo(getSimbolo(), getColor());
         recuadro.setBackground(new Color(63, 255, 56));
         recuadro.removeMouseListener(this);
         recuadro.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
