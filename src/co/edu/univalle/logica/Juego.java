@@ -61,6 +61,7 @@ public class Juego {
     }
 
     public void nuevaRonda() {
+        System.out.println("**********NUEVA RONDA**********");
         palabraAAdivinar = simbolos[random.nextInt(4)];
         colorAAdividar = colores[random.nextInt(4)];
         rondaAsociada += 1;
