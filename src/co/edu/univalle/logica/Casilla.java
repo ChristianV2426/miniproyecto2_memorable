@@ -69,7 +69,6 @@ public class Casilla implements MouseListener{
                 // Att. Juan Camilo: siento que el presente algoritmo puede ser depurado.
                 simbolo = simbolos[simboloAPintar];
                 if ((simbolo == pruebaJuego.getSimboloRonda()) && (colorPintadoSimbolo == pruebaJuego.getColorRonda())) {
-                    System.out.println("ENTRA ARRIBA");
                     simboloCondicionImpreso = true;
                     pruebaJuego.aumentarContadorCondicion();
                 } else if (simboloCondicionImpreso == false && simbolosPintados == numeroSimbolosAPintar-1) {
