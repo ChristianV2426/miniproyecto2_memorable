@@ -61,7 +61,7 @@ public class Juego {
     }
 
     public void nuevaRonda() {
-        System.out.println("**********NUEVA RONDA**********");
+        // System.out.println("**********NUEVA RONDA**********"); // Texto de depuración. !!!!!!!!!!
         palabraAAdivinar = simbolos[random.nextInt(4)];
         colorAAdividar = colores[random.nextInt(4)];
         rondaAsociada += 1;
@@ -88,7 +88,7 @@ public class Juego {
     public Boolean aciertoSimbolo(String simbolo1, Color color){
         if(simbolo1 == palabraAAdivinar && color == colorAAdividar){
             verificarSimbolosCondicion++;
-            System.out.println("contadorSimbolosCondicion: " + contadorSimbolosCondicion);
+            System.out.println("contadorSimbolosCondicion: " + contadorSimbolosCondicion); // Texto de depuración. !!!!!!!!!!
             if(verificarSimbolosCondicion == contadorSimbolosCondicion) {
                 sumarPuntos();
                 verificarSimbolosCondicion = 0;

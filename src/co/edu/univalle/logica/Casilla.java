@@ -62,34 +62,26 @@ public class Casilla implements MouseListener{
             }
             // Se asignan los símbolos a cada casilla.
             if (simboloAPintar >= 0 && simboloAPintar <= 3 && simbolosPintados < numeroSimbolosAPintar) {
-                System.out.println("---------CONTADOR ID: " + contadorId + "---------");
                 Color colorPintadoSimbolo = pruebaJuego.getRandomColor();
                 setColorPintado(colorPintadoSimbolo);
                 labelSymbolo.setForeground(colorPintadoSimbolo);
                 
-                System.out.println("simbolosPintados: " + simbolosPintados);
-                System.out.println("numeroSimbolosAPintar-1: " + (numeroSimbolosAPintar-1));
-                
+                // Att. Juan Camilo: siento que el presente algoritmo puede ser depurado.
                 simbolo = simbolos[simboloAPintar];
                 if ((simbolo == pruebaJuego.getSimboloRonda()) && (colorPintadoSimbolo == pruebaJuego.getColorRonda())) {
-                    // Se debe arreglar la condición, puesto que se rompe a partir de 1000
-                    /* El error está en que se pueden llegar a imprimir menos símbolos que los indicados en numeroSimbolosAPintar*/
-
                     System.out.println("ENTRA ARRIBA");
                     simboloCondicionImpreso = true;
                     pruebaJuego.aumentarContadorCondicion();
                 } else if (simboloCondicionImpreso == false && simbolosPintados == numeroSimbolosAPintar-1) {
                     /* Si no se ha asignado el símbolo de condición, y ya estamos en la última casilla, entonces 
                     * asignelo a esa última casilla */
-                    System.out.println("ENTRA ABAJO");
                     labelSymbolo.setForeground(pruebaJuego.getColorRonda());
                     simbolo = pruebaJuego.getSimboloRonda();
                     setColorPintado(pruebaJuego.getColorRonda());
                     pruebaJuego.aumentarContadorCondicion();
                 } else if (simboloCondicionImpreso == false && simbolosPintados != numeroSimbolosAPintar-1 && contadorId == 34) {
-                    /* Si no se ha asignado el símbolo de condición, y ya estamos en la última casilla, entonces 
-                    * asignelo a esa última casilla */
-                    System.out.println("ENTRA MÁS");
+                    /* Esta condición se ejerce a paortir de puntuaciones grandes, cuando los simbolosPintados no llegan a ser 
+                     * iguales a numeroSimbolosAPintar-1 */
                     labelSymbolo.setForeground(pruebaJuego.getColorRonda());
                     simbolo = pruebaJuego.getSimboloRonda();
                     setColorPintado(pruebaJuego.getColorRonda());
@@ -97,7 +89,6 @@ public class Casilla implements MouseListener{
                 }
                 simbolosPintados++;
 
-                System.out.println("--------------------------------");
             } else {
                 simbolo = simbolos[4];
             } // ¿y si hay una probabilidad de 2/3?
