@@ -32,7 +32,7 @@ import java.util.Random;
 import javax.swing.*;
 
     // Atributos:
-    public class VentanaJuego extends Ventana {
+    public class VentanaJuego extends Ventana implements KeyListener {
         private JLabel labelPuntuacion = new JLabel();
         private JLabel labelVidas = new JLabel();
         private JLabel labelCondicionTexto = new JLabel("Busque las palabras con la siguiente condición:");
@@ -47,13 +47,14 @@ import javax.swing.*;
         private JPanel panelMatriz = new JPanel();
         private JPanel panelFinal = new JPanel();
         private JButton buttonSonido = new JButton("🔊"); //🔇
-
+        private Casilla casillas[] = new Casilla[36];
+        static private int posicionTecla = 0;
+        
         
         // Constructor:
         public VentanaJuego(){
             // Listeners:
-            // Pintar páneles de prueba.
-            // cajaButton.setBackground(Color.blue);
+            this.addKeyListener(this);
             
             // Panel superior:
             northPanel.setPreferredSize(new Dimension(850, 90));
@@ -81,6 +82,7 @@ import javax.swing.*;
             restricciones.gridwidth = 1; 
             restricciones.gridheight = 1;
             panelButtonSonido.setBackground(new Color(0, 165, 181));
+            buttonSonido.setFocusable(false);
             panelButtonSonido.add(buttonSonido);
             panelCabecera.add(panelButtonSonido, restricciones);
 
@@ -152,19 +154,76 @@ import javax.swing.*;
     }
 
     public void actualizarCasillas(){
+        // posicionTecla = 0;
         panelMatriz.removeAll();
         pruebaJuego.nuevaRonda();
         labelCondicionSimbolo.setText(pruebaJuego.getSimboloRonda());
-        
         for(int recuadros = 0; recuadros < 36; recuadros++) {
             Casilla recuadro = new Casilla(pruebaJuego);
             panelMatriz.add(recuadro.pintar());
+            casillas = recuadro.getCasillas();
         }
+        casillas[posicionTecla].getJpanel().setBackground(Color.red);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
+        
+    }
+    
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // TODO Auto-generated method stub
+    }
+    
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // TODO Auto-generated method stub
+        // System.out.println("Se presionó " + e.getKeyCode());
+        // System.out.println("Casilla 0: " + casillas[0].getSimbolo());
+        switch(e.getKeyCode()) {
+            case 39:
+            if(posicionTecla+1<36){
+                    posicionTecla +=1;
+                    casillas[posicionTecla-1].getJpanel().setBackground(new Color(0, 165, 181));
+                    casillas[posicionTecla].getJpanel().setBackground(Color.red);
+                }
+                break;
+            case 40:
+            if(posicionTecla+9<36){
+                    posicionTecla +=9;
+                    casillas[posicionTecla-9].getJpanel().setBackground(new Color(0, 165, 181));
+                    casillas[posicionTecla].getJpanel().setBackground(Color.red);
+                }
+                break;
+
+            case 37:
+            if(posicionTecla-1 >= 0){
+                    posicionTecla -= 1;
+                    casillas[posicionTecla+1].getJpanel().setBackground(new Color(0, 165, 181));
+                    casillas[posicionTecla].getJpanel().setBackground(Color.red);
+                }
+                break;
+
+            case 38:
+            if(posicionTecla-9>=0){
+                    posicionTecla -= 9;
+                    casillas[posicionTecla+9].getJpanel().setBackground(new Color(0, 165, 181));
+                    casillas[posicionTecla].getJpanel().setBackground(Color.red);
+                }
+                break;
+
+            case 10:
+                casillas[posicionTecla].comprobar();
+        }
+        System.out.println("Posición: " + posicionTecla);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // TODO Auto-generated method stub
+        
         
     }
 }

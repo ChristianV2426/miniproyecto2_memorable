@@ -27,6 +27,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Casilla implements MouseListener{
+    static private Casilla casillas[] = new Casilla[36];
     private String[] simbolos = {"♠","♣", "♥", "♦", ""}; 
     private String simbolo = new String();
     static private int contadorId = 0;
@@ -40,14 +41,15 @@ public class Casilla implements MouseListener{
     private Color colorPintadoLabel;
     static private int controladorDificultad = 1;
     static private int numeroSimbolosAPintar = 2;
+    private JLabel recuadroLabel;
+    private JPanel recuadroPanel;
     
     /*  El tener un registro de qué ronda se está jugando
     permitirá ir aumentando la dificultad. */ 
     static private Juego pruebaJuego;
     
     public Casilla(Juego pruebaJuego){
-        this.pruebaJuego = pruebaJuego;
-        
+        this.pruebaJuego = pruebaJuego; 
         
         // int rondaAsociada = pruebaJuego.getRondaAsociada();
         /* Con base en el número de casillas (36), y el número de elementos que pueden ser
@@ -91,8 +93,11 @@ public class Casilla implements MouseListener{
             } else {
                 simbolo = simbolos[4];
             } // ¿y si hay una probabilidad de 2/3?
-        
+    
+            casillas[contadorId] = this;
+            // System.out.println("Símbolo " + contadorId + " " + casillas[contadorId].getSimbolo());
             contadorId++;
+
         }
     }
     
@@ -107,9 +112,10 @@ public class Casilla implements MouseListener{
         recuadro.setBackground(new Color(0, 165, 181));
         recuadro.addMouseListener(this);
         recuadro.add(labelSymbolo);
+        recuadroLabel = labelSymbolo;
+        recuadroPanel = recuadro;
         return recuadro;
     }
-    
     
     public void resetCasillas(){
         contadorId = 0;
@@ -139,10 +145,19 @@ public class Casilla implements MouseListener{
         }
     }
 
-    // Mouse Listener
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
+    public JPanel getJpanel(){
+        return recuadroPanel;
+    }
+
+    public JLabel getJlabel(){
+        return recuadroLabel;
+    }
+
+    public Casilla[] getCasillas(){
+        return casillas;
+    }
+
+    public void comprobar() {
         resetCasillas();
         pruebaJuego.getSimboloRonda();
         if(pruebaJuego.aciertoSimbolo(getSimbolo(), getColor())){
@@ -153,6 +168,13 @@ public class Casilla implements MouseListener{
         recuadro.setBackground(new Color(63, 255, 56));
         recuadro.removeMouseListener(this);
         recuadro.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
+
+    // Mouse Listener
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // TODO Auto-generated method stub
+        comprobar();
     }
 
     @Override
