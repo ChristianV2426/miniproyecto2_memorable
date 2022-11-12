@@ -217,7 +217,6 @@ import javax.swing.*;
             case 10:
                 casillas[posicionTecla].comprobar();
         }
-        System.out.println("Posición: " + posicionTecla);
     }
 
     @Override
