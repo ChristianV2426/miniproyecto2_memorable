@@ -38,6 +38,8 @@ public class Casilla implements MouseListener{
     private JPanel recuadro = new JPanel();
     private JLabel labelSymbolo = new JLabel();
     private Color colorPintadoLabel;
+    static private int controladorDificultad = 1;
+    static private int numeroSimbolosAPintar = 2;
     
     /*  El tener un registro de qué ronda se está jugando
     permitirá ir aumentando la dificultad. */ 
@@ -47,7 +49,6 @@ public class Casilla implements MouseListener{
         this.pruebaJuego = pruebaJuego;
         
         
-        int numeroSimbolosAPintar = pruebaJuego.getRondaAsociada()+1;
         // int rondaAsociada = pruebaJuego.getRondaAsociada();
         /* Con base en el número de casillas (36), y el número de elementos que pueden ser
         * pintados (4), se considera el número 30 como una buena estimación probabilística 
@@ -65,7 +66,6 @@ public class Casilla implements MouseListener{
                 Color colorPintadoSimbolo = pruebaJuego.getRandomColor();
                 setColorPintado(colorPintadoSimbolo);
                 labelSymbolo.setForeground(colorPintadoSimbolo);
-                
                 // Att. Juan Camilo: siento que el presente algoritmo puede ser depurado.
                 simbolo = simbolos[simboloAPintar];
                 if ((simbolo == pruebaJuego.getSimboloRonda()) && (colorPintadoSimbolo == pruebaJuego.getColorRonda())) {
@@ -109,7 +109,8 @@ public class Casilla implements MouseListener{
         recuadro.add(labelSymbolo);
         return recuadro;
     }
-
+    
+    
     public void resetCasillas(){
         contadorId = 0;
         simbolosPintados = 0;
@@ -117,17 +118,25 @@ public class Casilla implements MouseListener{
         simboloCondicionImpreso = false;
         probabilidadImpresion = 30;
     }
-
+    
     public String getSimbolo() {
         return simbolo;
     }
-
+    
     public Color getColor() {
         return colorPintadoLabel;
     }
 
     private void setColorPintado(Color color) {
         colorPintadoLabel = color;
+    }
+    
+    private void confirmarDificultad(){
+        // Cada 3 aciertos de ronda se aumentará un símbolo.
+        if (controladorDificultad == 3) {
+            numeroSimbolosAPintar += 1;
+            controladorDificultad = 0;
+        }
     }
 
     // Mouse Listener
@@ -136,7 +145,11 @@ public class Casilla implements MouseListener{
         // TODO Auto-generated method stub
         resetCasillas();
         pruebaJuego.getSimboloRonda();
-        pruebaJuego.aciertoSimbolo(getSimbolo(), getColor());
+        if(pruebaJuego.aciertoSimbolo(getSimbolo(), getColor())){
+            controladorDificultad += 1;
+            confirmarDificultad();
+        }
+        
         recuadro.setBackground(new Color(63, 255, 56));
         recuadro.removeMouseListener(this);
         recuadro.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));

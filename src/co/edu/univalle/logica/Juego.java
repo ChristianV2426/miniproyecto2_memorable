@@ -88,16 +88,17 @@ public class Juego {
     public Boolean aciertoSimbolo(String simbolo1, Color color){
         if(simbolo1 == palabraAAdivinar && color == colorAAdividar){
             verificarSimbolosCondicion++;
-            System.out.println("contadorSimbolosCondicion: " + contadorSimbolosCondicion); // Texto de depuración. !!!!!!!!!!
+            // System.out.println("contadorSimbolosCondicion: " + contadorSimbolosCondicion); // Texto de depuración. !!!!!!!!!!
             if(verificarSimbolosCondicion == contadorSimbolosCondicion) {
                 sumarPuntos();
                 verificarSimbolosCondicion = 0;
+                return true;
             }
-            return true;
+            return false;
         } else {
             restarVida();
             verificarSimbolosCondicion = 0;
-            return true;
+            return false;
         }
     }
 
