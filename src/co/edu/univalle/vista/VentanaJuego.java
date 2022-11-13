@@ -38,7 +38,7 @@ import javax.swing.*;
         private JLabel labelVidas = new JLabel();
         private JLabel labelCondicionTexto = new JLabel();
         private Juego pruebaJuego = new Juego(0, this);
-        private JLabel labelUsuario = new JLabel("Jugador: Juan Narváez");
+        private JLabel labelUsuario = new JLabel();
         private JLabel labelCondicionSimbolo = new JLabel();
         private JPanel panelCabecera = new JPanel();
         private JPanel panelButtonSonido = new JPanel();
@@ -101,12 +101,14 @@ import javax.swing.*;
             restricciones.gridwidth = 1; 
             restricciones.gridheight = 1;
             panelLabelPuntuacion.setBackground(new Color(0, 165, 181));
-            panelLabelPuntuacion.setMinimumSize(new Dimension(350, 0));
-            panelLabelPuntuacion.setLayout(new GridLayout(1, 1));
+            panelLabelPuntuacion.setMinimumSize(new Dimension(350, 50));
+            panelLabelPuntuacion.setLayout(new GridLayout(2, 1));
             labelPuntuacion.setFont(new Font("Arial", Font.PLAIN, 24));
             labelPuntuacion.setHorizontalAlignment(JLabel.CENTER);
             labelPuntuacion.setText(pruebaJuego.getPuntos());
             panelLabelPuntuacion.add(labelPuntuacion);
+            labelUsuario.setHorizontalAlignment(JLabel.CENTER);
+            panelLabelPuntuacion.add(labelUsuario);
             panelCabecera.add(panelLabelPuntuacion, restricciones);
             
             restricciones.gridx = 2;
@@ -150,6 +152,10 @@ import javax.swing.*;
         labelPuntuacion.setText(pruebaJuego.getPuntos());
     }
     
+    public void setNombreUsuario(String nombreUsuario){
+        labelUsuario.setText("Jugador: " + nombreUsuario);
+    }
+
     public void actualizarColores(){
         labelCondicionSimbolo.setForeground(pruebaJuego.getColorRonda());
     }
