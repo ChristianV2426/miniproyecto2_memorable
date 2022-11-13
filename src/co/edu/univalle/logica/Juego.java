@@ -16,7 +16,7 @@
 /**
     CLASE: Juego
     INTENCIÓN: Esta clase se encargará de implementar la lógica del juego Memorable.
-    RELACIONES:
+    RELACIONES: Conoce a VentanaJuego y a VentanaEstadisticas
 */
 
 package co.edu.univalle.logica;
@@ -26,9 +26,6 @@ import co.edu.univalle.vista.VentanaJuego;
 
 import java.awt.Color;
 import java.util.*;
-
-import javax.swing.text.AttributeSet.ColorAttribute;
-import javax.swing.text.StyleConstants.ColorConstants;
 
 public class Juego {
     //Atributos:
@@ -40,14 +37,15 @@ public class Juego {
     private Color colorAAdividar;
     private Random random = new Random();
     private String nombreDelJugador;
+    private int tipoDeCondicion; 
     private String[] simbolos = {"♠","♣", "♥", "♦"};
     // Negro, morado, verde, azul.
-    private Color[] colores = {new Color(0,0,0), new Color(148,41,255), new Color(29,217,9), new Color(57,62,219)};
+    private Color[] colores = {new Color(0,0,0), new Color(148,41,255), new Color(42, 102, 41), new Color(57,62,219)};
     private int contadorSimbolosCondicion = 0;
     private int verificarSimbolosCondicion = 0;
     private int rondaAsociada = 0;
     
-    //Métodos:
+    // Contructor:
     public Juego(int rondaAsociada, VentanaJuego ventanaAsociada) {
         this.ventanaAsociada = ventanaAsociada;
         palabraAAdivinar = simbolos[random.nextInt(4)];
@@ -55,22 +53,29 @@ public class Juego {
         this.rondaAsociada = rondaAsociada;
         this.nombreDelJugador = nombreDelJugador;
     }
-
+    
+    //Métodos:
     public Color getRandomColor() {
         return colores[random.nextInt(4)];
     }
 
     public void nuevaRonda() {
-        // System.out.println("**********NUEVA RONDA**********"); // Texto de depuración. !!!!!!!!!!
+        tipoDeCondicion = random.nextInt(3); //0: Símbolo, 1: Color, 2: Color y Símbolo.
         palabraAAdivinar = simbolos[random.nextInt(4)];
         colorAAdividar = colores[random.nextInt(4)];
+        if(tipoDeCondicion == 0){
+            colorAAdividar = colores[0];
+        }
         rondaAsociada += 1;
         contadorSimbolosCondicion = 0;
     }
 
     public void aumentarContadorCondicion(){
         contadorSimbolosCondicion++;
-        
+    }
+
+    public int getTipoDeCondicion(){
+        return tipoDeCondicion;
     }
 
     public int getRondaAsociada(){
@@ -86,19 +91,51 @@ public class Juego {
     }
 
     public Boolean aciertoSimbolo(String simbolo1, Color color){
-        if(simbolo1 == palabraAAdivinar && color == colorAAdividar){
-            verificarSimbolosCondicion++;
-            System.out.println("contadorSimbolosCondicion: " + contadorSimbolosCondicion); // Texto de depuración. !!!!!!!!!!
-            if(verificarSimbolosCondicion == contadorSimbolosCondicion) {
-                sumarPuntos();
+        // Att. Juan Camilo: siento que el presente algoritmo puede ser depurado.
+        if(tipoDeCondicion == 0){
+            if(simbolo1 == palabraAAdivinar){
+                verificarSimbolosCondicion++;
+                if(verificarSimbolosCondicion == contadorSimbolosCondicion) {
+                    sumarPuntos();
+                    verificarSimbolosCondicion = 0;
+                    return true;
+                }
+                return false;
+            } else {
+                restarVida();
                 verificarSimbolosCondicion = 0;
+                return false;
             }
-            return true;
-        } else {
-            restarVida();
-            verificarSimbolosCondicion = 0;
-            return true;
+        } else if(tipoDeCondicion == 1){
+            if(color == colorAAdividar){
+                verificarSimbolosCondicion++;
+                if(verificarSimbolosCondicion == contadorSimbolosCondicion) {
+                    sumarPuntos();
+                    verificarSimbolosCondicion = 0;
+                    return true;
+                }
+                return false;
+            } else {
+                restarVida();
+                verificarSimbolosCondicion = 0;
+                return false;
+            }
+        }else if(tipoDeCondicion == 2){
+            if(simbolo1 == palabraAAdivinar && color == colorAAdividar){
+                verificarSimbolosCondicion++;
+                if(verificarSimbolosCondicion == contadorSimbolosCondicion) {
+                    sumarPuntos();
+                    verificarSimbolosCondicion = 0;
+                    return true;
+                }
+                return false;
+            } else {
+                restarVida();
+                verificarSimbolosCondicion = 0;
+                return false;
+            }
         }
+        return false;
     }
 
     public String getVidas(){
