@@ -184,6 +184,7 @@ public class Casilla implements MouseListener{
             confirmarDificultad();
         }
         colorJpanel = new Color(63, 255, 56);
+        recuadroLabel.setVisible(true);
         recuadro.setBackground(colorJpanel);
         recuadro.removeMouseListener(this);
         recuadro.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));

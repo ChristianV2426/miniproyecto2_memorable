@@ -40,7 +40,7 @@ public class Juego {
     private int tipoDeCondicion; 
     private String[] simbolos = {"♠","♣", "♥", "♦"};
     // Negro, morado, verde, azul.
-    private Color[] colores = {new Color(0,0,0), new Color(148,41,255), new Color(29,217,9), new Color(57,62,219)};
+    private Color[] colores = {new Color(0,0,0), new Color(148,41,255), new Color(42, 102, 41), new Color(57,62,219)};
     private int contadorSimbolosCondicion = 0;
     private int verificarSimbolosCondicion = 0;
     private int rondaAsociada = 0;
