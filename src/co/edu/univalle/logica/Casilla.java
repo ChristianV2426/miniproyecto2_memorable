@@ -16,7 +16,7 @@
 /**
     CLASE: Casilla
     INTENCIÓN: Esta clase se comporta como un objeto para cada casilla pintada, y manipula los atributos internos.
-    RELACIONES: conoce a Juego y VentanaJuego.
+    RELACIONES: conoce a Juego.
 */
 
 package co.edu.univalle.logica;
