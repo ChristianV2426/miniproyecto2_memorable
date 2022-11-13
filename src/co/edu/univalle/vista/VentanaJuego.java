@@ -32,8 +32,8 @@ import java.util.Timer;
 
 import javax.swing.*;
 
-    // Atributos:
-    public class VentanaJuego extends Ventana implements KeyListener {
+public class VentanaJuego extends Ventana implements KeyListener {
+        // Atributos:
         private JLabel labelPuntuacion = new JLabel();
         private JLabel labelVidas = new JLabel();
         private JLabel labelCondicionTexto = new JLabel();
@@ -144,12 +144,13 @@ import javax.swing.*;
             setVisible(true);
         }   
         
-        public void actualizarVidas(){
-            labelVidas.setText(pruebaJuego.getVidas());
-        }
-        
-        public void actualizarPuntos(){
-        labelPuntuacion.setText(pruebaJuego.getPuntos());
+    // Métodos.
+    public void actualizarVidas(){
+        labelVidas.setText(pruebaJuego.getVidas());
+    }
+    
+    public void actualizarPuntos(){
+    labelPuntuacion.setText(pruebaJuego.getPuntos());
     }
     
     public void setNombreUsuario(String nombreUsuario){
