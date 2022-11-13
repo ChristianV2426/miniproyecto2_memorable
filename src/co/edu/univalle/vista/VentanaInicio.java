@@ -139,7 +139,7 @@ public class VentanaInicio extends Ventana {
             iniciarJuego();
         } else if (evento.getSource() == buttonInstrucciones){
             dispose();
-             VentanaInstrucciones ventanaInstrucciones = new VentanaInstrucciones();
+            VentanaInstrucciones ventanaInstrucciones = new VentanaInstrucciones();
             
         } else if (evento.getSource() == buttonParaQueSirve){
             dispose();
@@ -160,9 +160,9 @@ public class VentanaInicio extends Ventana {
             fieldNombreJugador.requestFocusInWindow();
             
         } else {
-            // Juego juego = new Juego(nombreJugador);
-            // dispose();
-            // VentanaJuego ventanaJuego = new VentanaJuego();
+            VentanaJuego ventanaJuego = new VentanaJuego();
+            ventanaJuego.setNombreUsuario(nombreJugador);
+            dispose();
         }
     }
 }
