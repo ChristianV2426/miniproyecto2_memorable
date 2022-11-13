@@ -44,6 +44,7 @@ public class Casilla implements MouseListener{
     private JLabel recuadroLabel;
     private JPanel recuadroPanel;
     private int tipoDeCondicion;
+    private Color colorJpanel;
     
     /*  El tener un registro de qué ronda se está jugando
     permitirá ir aumentando la dificultad. */ 
@@ -121,7 +122,8 @@ public class Casilla implements MouseListener{
         labelSymbolo.setHorizontalAlignment(JLabel.CENTER);
         labelSymbolo.setFont(new Font("Arial", Font.PLAIN, 36));
         recuadro.setLayout(new GridLayout(1, 1));
-        recuadro.setBackground(new Color(0, 165, 181));
+        colorJpanel = new Color(0, 165, 181);
+        recuadro.setBackground(colorJpanel);
         recuadro.addMouseListener(this);
         recuadro.add(labelSymbolo);
         recuadroLabel = labelSymbolo;
@@ -161,6 +163,10 @@ public class Casilla implements MouseListener{
         return recuadroPanel;
     }
 
+    public Color getColorJpanel(){
+        return colorJpanel;
+    }
+
     public JLabel getJlabel(){
         return recuadroLabel;
     }
@@ -177,7 +183,8 @@ public class Casilla implements MouseListener{
             controladorDificultad += 1;
             confirmarDificultad();
         }
-        recuadro.setBackground(new Color(63, 255, 56));
+        colorJpanel = new Color(63, 255, 56);
+        recuadro.setBackground(colorJpanel);
         recuadro.removeMouseListener(this);
         recuadro.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
