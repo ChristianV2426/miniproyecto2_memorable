@@ -40,7 +40,6 @@ public class VentanaEstadisticas extends Ventana {
     private JLabel labelTitulo = new JLabel("M E M O R A B L E");
     private JLabel labelSubtitulo = new JLabel("Estadísticas del juego");
     private JButton buttonVolver = new JButton("Volver a jugar");
-    private JButton buttonSalir = new JButton("Salir");
     private JLabel labelEstadisticas = new JLabel("Este fue tu desempeño durante el juego:");
     private JLabel labelAciertos = new JLabel("Cantidad de aciertos: ");
     private JLabel labelPuntaje = new JLabel("Puntaje total: ");
@@ -52,7 +51,6 @@ public class VentanaEstadisticas extends Ventana {
         
         // Listeners:
         buttonVolver.addActionListener(this);
-        buttonSalir.addActionListener(this);
 		
         // Panel superior:
         northPanel.setPreferredSize(new Dimension(850, 90));
@@ -133,7 +131,6 @@ public class VentanaEstadisticas extends Ventana {
         // Cargar estadísticas:
         cargarEstadisticas();
 
-
         // Mostrar Pantalla Inicial.
         setVisible(true);
     }   
@@ -163,9 +160,6 @@ public class VentanaEstadisticas extends Ventana {
         if (evento.getSource() == buttonVolver){
             dispose();
             VentanaInicio ventana = new VentanaInicio();
-
-        } else if (evento.getSource() == buttonSalir){
-            dispose();
         }
     }
 }
