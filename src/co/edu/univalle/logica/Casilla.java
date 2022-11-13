@@ -43,6 +43,7 @@ public class Casilla implements MouseListener{
     static private int numeroSimbolosAPintar = 2;
     private JLabel recuadroLabel;
     private JPanel recuadroPanel;
+    private int tipoDeCondicion;
     
     /*  El tener un registro de qué ronda se está jugando
     permitirá ir aumentando la dificultad. */ 
@@ -51,7 +52,6 @@ public class Casilla implements MouseListener{
     public Casilla(Juego pruebaJuego){
         this.pruebaJuego = pruebaJuego; 
         
-        // int rondaAsociada = pruebaJuego.getRondaAsociada();
         /* Con base en el número de casillas (36), y el número de elementos que pueden ser
         * pintados (4), se considera el número 30 como una buena estimación probabilística 
         * para el correcto funcinamiento de los símbolos pintados. */
@@ -67,13 +67,27 @@ public class Casilla implements MouseListener{
             if (simboloAPintar >= 0 && simboloAPintar <= 3 && simbolosPintados < numeroSimbolosAPintar) {
                 Color colorPintadoSimbolo = pruebaJuego.getRandomColor();
                 setColorPintado(colorPintadoSimbolo);
+                tipoDeCondicion = pruebaJuego.getTipoDeCondicion();
                 labelSymbolo.setForeground(colorPintadoSimbolo);
                 // Att. Juan Camilo: siento que el presente algoritmo puede ser depurado.
                 simbolo = simbolos[simboloAPintar];
-                if ((simbolo == pruebaJuego.getSimboloRonda()) && (colorPintadoSimbolo == pruebaJuego.getColorRonda())) {
-                    simboloCondicionImpreso = true;
-                    pruebaJuego.aumentarContadorCondicion();
-                } else if (simboloCondicionImpreso == false && simbolosPintados == numeroSimbolosAPintar-1) {
+                if(tipoDeCondicion == 0){
+                    if (simbolo == pruebaJuego.getSimboloRonda()) {
+                        simboloCondicionImpreso = true;
+                        pruebaJuego.aumentarContadorCondicion();
+                    }
+                } else if(tipoDeCondicion == 1){
+                    if (colorPintadoSimbolo == pruebaJuego.getColorRonda()) {
+                        simboloCondicionImpreso = true;
+                        pruebaJuego.aumentarContadorCondicion();
+                    } 
+                }else if(tipoDeCondicion == 2){
+                    if ((simbolo == pruebaJuego.getSimboloRonda()) && (colorPintadoSimbolo == pruebaJuego.getColorRonda())) {
+                        simboloCondicionImpreso = true;
+                        pruebaJuego.aumentarContadorCondicion();
+                    }
+                }
+                if (simboloCondicionImpreso == false && simbolosPintados == numeroSimbolosAPintar-1) {
                     /* Si no se ha asignado el símbolo de condición, y ya estamos en la última casilla, entonces 
                     * asignelo a esa última casilla */
                     labelSymbolo.setForeground(pruebaJuego.getColorRonda());
@@ -87,7 +101,7 @@ public class Casilla implements MouseListener{
                     simbolo = pruebaJuego.getSimboloRonda();
                     setColorPintado(pruebaJuego.getColorRonda());
                     pruebaJuego.aumentarContadorCondicion();
-                }
+                }    
                 simbolosPintados++;
 
             } else {
@@ -95,9 +109,7 @@ public class Casilla implements MouseListener{
             } // ¿y si hay una probabilidad de 2/3?
     
             casillas[contadorId] = this;
-            // System.out.println("Símbolo " + contadorId + " " + casillas[contadorId].getSimbolo());
             contadorId++;
-
         }
     }
     
@@ -160,11 +172,11 @@ public class Casilla implements MouseListener{
     public void comprobar() {
         resetCasillas();
         pruebaJuego.getSimboloRonda();
+
         if(pruebaJuego.aciertoSimbolo(getSimbolo(), getColor())){
             controladorDificultad += 1;
             confirmarDificultad();
         }
-        
         recuadro.setBackground(new Color(63, 255, 56));
         recuadro.removeMouseListener(this);
         recuadro.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -180,24 +192,20 @@ public class Casilla implements MouseListener{
     @Override
     public void mousePressed(MouseEvent e) {
         // TODO Auto-generated method stub
-        
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
-        
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
         // TODO Auto-generated method stub
-        
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
         // TODO Auto-generated method stub
-        
     }
 }

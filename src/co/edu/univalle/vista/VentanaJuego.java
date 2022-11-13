@@ -27,7 +27,6 @@ import co.edu.univalle.logica.*;
 import java.awt.*;
 // import java.util.*;
 import java.awt.event.*;
-import java.util.Random;
 import java.util.TimerTask;
 import java.util.Timer;
 
@@ -37,14 +36,13 @@ import javax.swing.*;
     public class VentanaJuego extends Ventana implements KeyListener {
         private JLabel labelPuntuacion = new JLabel();
         private JLabel labelVidas = new JLabel();
-        private JLabel labelCondicionTexto = new JLabel("Busque las palabras con la siguiente condición:");
+        private JLabel labelCondicionTexto = new JLabel();
         private Juego pruebaJuego = new Juego(0, this);
         private JLabel labelUsuario = new JLabel("Jugador: Juan Narváez");
         private JLabel labelCondicionSimbolo = new JLabel();
         private JPanel panelCabecera = new JPanel();
         private JPanel panelButtonSonido = new JPanel();
         private JPanel panelLabelPuntuacion = new JPanel();
-        private Random random = new Random();
         private JPanel panelLabelVidas = new JPanel();
         private JPanel panelMatriz = new JPanel();
         private JPanel panelFinal = new JPanel();
@@ -53,13 +51,12 @@ import javax.swing.*;
         static private int posicionTecla = 0;
         private Timer timer = new Timer();
         private int tiempoDeEspera = 2000; // 2 segundos. 
+        private int tipoDeCondicion;
         
         // Constructor:
         public VentanaJuego(){
             // Listeners:
             this.addKeyListener(this);
-            
-            
             
             // Panel superior:
             northPanel.setPreferredSize(new Dimension(850, 90));
@@ -124,7 +121,6 @@ import javax.swing.*;
             labelVidas.setText(pruebaJuego.getVidas());
             panelLabelVidas.add(labelVidas);
             panelCabecera.add(panelLabelVidas, restricciones);          
-            
             northPanel.add(panelCabecera);
             
             // Panel central:
@@ -141,44 +137,29 @@ import javax.swing.*;
             panelFinal.add(labelCondicionTexto);
             panelFinal.add(labelCondicionSimbolo);
             southPanel.add(panelFinal);
+
             // Mostrar Pantalla Inicial.
-            
             setVisible(true);
         }   
         
-    public void actualizarVidas(){
-        labelVidas.setText(pruebaJuego.getVidas());
-    }
-    
-    public void actualizarPuntos(){
+        public void actualizarVidas(){
+            labelVidas.setText(pruebaJuego.getVidas());
+        }
+        
+        public void actualizarPuntos(){
         labelPuntuacion.setText(pruebaJuego.getPuntos());
     }
-
+    
     public void actualizarColores(){
         labelCondicionSimbolo.setForeground(pruebaJuego.getColorRonda());
     }
-
-    public void actualizarCasillas(){
-        // Tareas temporales:
-        TimerTask task = new TimerTask() {
-            
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                for(int recuadros = 0; recuadros < 36; recuadros++) {
-                    // casillas[recuadros].getJpanel().setBackground(new Color(0, 165, 181));
-                    casillas[recuadros].getJlabel().setVisible(false);
-                }
-                labelCondicionSimbolo.setText(pruebaJuego.getSimboloRonda());
-                labelCondicionSimbolo.setForeground(pruebaJuego.getColorRonda());
-            }
-        };
     
-        timer.schedule(task, tiempoDeEspera);
-
+    public void actualizarCasillas(){
+        labelCondicionTexto.setText("Mire los símbolos...");
         panelMatriz.removeAll();
         pruebaJuego.nuevaRonda();
         labelCondicionSimbolo.setText(pruebaJuego.getSimboloRonda());
+
         for(int recuadros = 0; recuadros < 36; recuadros++) {
             Casilla recuadro = new Casilla(pruebaJuego);
             panelMatriz.add(recuadro.pintar());
@@ -186,12 +167,34 @@ import javax.swing.*;
         }
         casillas[posicionTecla].getJpanel().setBackground(Color.red);
         labelCondicionSimbolo.setText("");
+        tipoDeCondicion = pruebaJuego.getTipoDeCondicion();
+
+        // Tareas temporales:
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                for(int recuadros = 0; recuadros < 36; recuadros++) {
+                    casillas[recuadros].getJlabel().setVisible(false); // Se recomienda comentar esta línea para depurar.
+                }
+                labelCondicionSimbolo.setText(pruebaJuego.getSimboloRonda());
+                labelCondicionSimbolo.setForeground(pruebaJuego.getColorRonda());
+                if(tipoDeCondicion == 0){
+                    labelCondicionTexto.setText("Seleccione los siguientes símbolos:");
+                } else if(tipoDeCondicion == 1){
+                    labelCondicionTexto.setText("Seleccione los siguientes colores:");
+                    labelCondicionSimbolo.setText("■");
+                }else if(tipoDeCondicion == 2){
+                    labelCondicionTexto.setText("Seleccione los siguientes símbolos con color:");
+                }
+            }
+        };
+        
+        timer.schedule(task, tiempoDeEspera);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
-        
     }
     
     @Override
@@ -202,8 +205,6 @@ import javax.swing.*;
     @Override
     public void keyPressed(KeyEvent e) {
         // TODO Auto-generated method stub
-        // System.out.println("Se presionó " + e.getKeyCode());
-        // System.out.println("Casilla 0: " + casillas[0].getSimbolo());
         switch(e.getKeyCode()) {
             case 39:
             if(posicionTecla+1<36){
@@ -244,7 +245,5 @@ import javax.swing.*;
     @Override
     public void keyReleased(KeyEvent e) {
         // TODO Auto-generated method stub
-        
-        
     }
 }
