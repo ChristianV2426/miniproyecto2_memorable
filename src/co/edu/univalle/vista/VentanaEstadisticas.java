@@ -1,7 +1,7 @@
 /*
     Archivo: VentanaEstadisticas.java
     Fundamentos de Programación Orientada a Eventos - 750014C Grupo 01
-    Proyecto 1 - El ahorcado
+    Proyecto 2 - Memorable
 
     Autores: 
     Juan Camilo Narvaez Tascon - juan.narvaez.tascon@correounivalle.edu.co - 2140112-3743
@@ -15,12 +15,13 @@
 
 /**
     CLASE: VentanaEstadisticas
-    INTENCIÓN: Se mostrarán las estadísticas de las rondas jugadas por el jugador; rondas
-    realizadas, mejor ronda, peor ronda, palabra más acertada. Toda esta información es
-    recopilada a durante los juegos de cada jugador. Consiguiente el usuario podrá volver
-    a la pantalla de inicio para iniciar un nuevo juego.
+    INTENCIÓN: Esta ventana muestra las estadísticas finales del juego; 
+    al final de cada ronda el jugador verá su puntaje final, número de aciertos y tiempo total jugado. 
+    También podrá iniciar una nueva partida si así lo desea. 
+
     RELACIONES:
     -Es una Ventana.
+    -Conoce un juego
  */
 
 package co.edu.univalle.vista;
@@ -34,20 +35,16 @@ public class VentanaEstadisticas extends Ventana {
     // Atributos:
     private Juego juego;
     private JPanel panelCabecera = new JPanel();
-    private JPanel rejillaGeneral = new JPanel();
-    private JPanel rejillaEstadisticas = new JPanel();
-    private JPanel cabezaEstadisticas = new JPanel();
-    private JPanel cuerpoEstadisticas = new JPanel();
-    private JPanel cajaInferior = new JPanel();
-    private JPanel cajaBoton = new JPanel();
-    private JLabel labelTitulo = new JLabel("El Ahorcado");
-    private JLabel labelSubtitulo = new JLabel("Universidad del Valle");
-    private JButton buttonVolver = new JButton("Volver");
-    private JLabel labelEstadisticas = new JLabel("Estadísticas");
-    private JLabel labelRodasRealizadas = new JLabel();
-    private JLabel labelMejorRonda = new JLabel("Mejor ronda: -");
-    private JLabel labelPeorRonda = new JLabel("Peor ronda: -");
-    private JLabel labelModaPalabra = new JLabel("Palabra más acertada: -");
+    private JPanel panelPrincipal = new JPanel();
+    private JPanel panelButtonVolver = new JPanel();
+    private JLabel labelTitulo = new JLabel("M E M O R A B L E");
+    private JLabel labelSubtitulo = new JLabel("Estadísticas del juego");
+    private JButton buttonVolver = new JButton("Volver a jugar");
+    private JButton buttonSalir = new JButton("Salir");
+    private JLabel labelEstadisticas = new JLabel("Este fue tu desempeño durante el juego:");
+    private JLabel labelAciertos = new JLabel("Cantidad de aciertos: ");
+    private JLabel labelPuntaje = new JLabel("Puntaje total: ");
+    private JLabel labelTiempo = new JLabel("Tiempo jugado: ");
     
     // Constructor:
     public VentanaEstadisticas(Juego juego){
@@ -55,62 +52,120 @@ public class VentanaEstadisticas extends Ventana {
         
         // Listeners:
         buttonVolver.addActionListener(this);
+        buttonSalir.addActionListener(this);
 		
-        // Configuración de páneles propios.
-        northPanel.setPreferredSize(new Dimension(100, 90));
-        northPanel.setBackground(new Color(79, 198, 198));
+        // Panel superior:
+        northPanel.setPreferredSize(new Dimension(850, 90));
+        northPanel.setBackground(new Color(0, 165, 181));
         panelCabecera.setLayout(new GridLayout(2, 1));
         panelCabecera.setBackground(new Color(0, 0, 0, 0));
-        rejillaGeneral.setPreferredSize(new Dimension(300, 300));
-        rejillaGeneral.setLayout(new GridLayout(2, 1));
-        rejillaEstadisticas.setLayout(new GridLayout(2, 1));
-        cajaInferior.setLayout(new GridLayout(2, 1));
-        cuerpoEstadisticas.setLayout(new GridLayout(4, 1, 0, 8));
-        
-        // Añadidos de ventana inicial.
-        // Una buena opción sería incluir este bloque en un try catch
-        // labelRodasRealizadas.setText("Rondas realizadas: " + juego.getRondasEjecutadas());
-        // labelMejorRonda.setText("Mejor ronda: " + juego.getMejorRonda() + " (" + juego.getMayorPorcentajeRondas() + "%)");
-        // labelPeorRonda.setText("Peor ronda: " + juego.getPeorRonda() + " (" + juego.getPeorPorcentajeRondas() + "%)");
-        // labelModaPalabra.setText("Palabra más acertada: " + juego.palabraMasAcertada());
-
-
-        labelRodasRealizadas.setHorizontalAlignment(JLabel.CENTER);
-        labelMejorRonda.setHorizontalAlignment(JLabel.CENTER);
-        labelPeorRonda.setHorizontalAlignment(JLabel.CENTER);
-        labelModaPalabra.setHorizontalAlignment(JLabel.CENTER);
-        labelEstadisticas.setFont(new Font("Arial", Font.BOLD, 20));
         labelTitulo.setFont(new Font("Arial", Font.BOLD, 34));
         labelTitulo.setHorizontalAlignment(JLabel.CENTER);
         labelSubtitulo.setFont(new Font("Arial", Font.BOLD, 16));
         labelSubtitulo.setHorizontalAlignment(JLabel.CENTER);
-        labelEstadisticas.setHorizontalAlignment(JLabel.CENTER);
         panelCabecera.add(labelTitulo);
         panelCabecera.add(labelSubtitulo);
         northPanel.add(panelCabecera);
-        cabezaEstadisticas.add(labelEstadisticas);
-        cuerpoEstadisticas.add(labelRodasRealizadas);
-        cuerpoEstadisticas.add(labelMejorRonda);
-        cuerpoEstadisticas.add(labelPeorRonda);
-        cuerpoEstadisticas.add(labelModaPalabra);
-        rejillaEstadisticas.add(cabezaEstadisticas);
-        rejillaEstadisticas.add(cuerpoEstadisticas);
-        rejillaGeneral.add(rejillaEstadisticas);
-        cajaBoton.add(buttonVolver);
-        cajaInferior.add(new JPanel());
-        cajaInferior.add(cajaBoton);
-        rejillaGeneral.add(cajaInferior);
-        centerPanel.add(rejillaGeneral);
+
+        // Panel central:
+        panelPrincipal.setPreferredSize(new Dimension(450, 300));
+        panelPrincipal.setLayout(new GridBagLayout());
+
+        GridBagConstraints restricciones = new GridBagConstraints();
+        restricciones.weightx = 1.0;
+        restricciones.weighty = 1.0;
+        restricciones.fill = GridBagConstraints.BOTH;
+        restricciones.insets = new Insets(10, 15, 5, 10);
+
+        restricciones.gridx = 0;
+        restricciones.gridy = 0;
+        restricciones.gridwidth = 3; 
+        restricciones.gridheight = 1;
+        labelEstadisticas.setFont(new Font("Arial", Font.BOLD, 16));
+        labelEstadisticas.setHorizontalAlignment(JLabel.CENTER);
+        panelPrincipal.add(labelEstadisticas, restricciones);
+
+        restricciones.gridx = 0;
+        restricciones.gridy = 1;
+        restricciones.gridwidth = 3; 
+        restricciones.gridheight = 1;
+        labelAciertos.setFont(new Font("Arial", Font.PLAIN, 14));
+        labelAciertos.setHorizontalAlignment(JLabel.CENTER);
+        panelPrincipal.add(labelAciertos, restricciones);
+
+        restricciones.gridx = 0;
+        restricciones.gridy = 2;
+        restricciones.gridwidth = 3; 
+        restricciones.gridheight = 1;
+        labelPuntaje.setFont(new Font("Arial", Font.PLAIN, 14));
+        labelPuntaje.setHorizontalAlignment(JLabel.CENTER);
+        panelPrincipal.add(labelPuntaje, restricciones);
+
+        restricciones.gridx = 0;
+        restricciones.gridy = 3;
+        restricciones.gridwidth = 3; 
+        restricciones.gridheight = 1;
+        labelTiempo.setFont(new Font("Arial", Font.PLAIN, 14));
+        labelTiempo.setHorizontalAlignment(JLabel.CENTER);
+        panelPrincipal.add(labelTiempo, restricciones);
+
+        restricciones.gridx = 0;
+        restricciones.gridy = 4;
+        restricciones.gridwidth = 1; 
+        restricciones.gridheight = 1;
+        panelPrincipal.add(new JPanel(), restricciones);
+
+        restricciones.gridx = 1;
+        restricciones.gridy = 4;
+        restricciones.gridwidth = 1; 
+        restricciones.gridheight = 1;
+        panelButtonVolver.add(buttonVolver);
+        panelPrincipal.add(panelButtonVolver, restricciones);
+
+        restricciones.gridx = 2;
+        restricciones.gridy = 4;
+        restricciones.gridwidth = 1; 
+        restricciones.gridheight = 1;
+        panelPrincipal.add(new JPanel(), restricciones);
+
+        centerPanel.add(panelPrincipal);
+
+        // Cargar estadísticas:
+        cargarEstadisticas();
+
 
         // Mostrar Pantalla Inicial.
         setVisible(true);
     }   
 
+    public void cargarEstadisticas(){
+        try{
+            labelAciertos.setText(labelAciertos.getText() + " 1");
+        } catch (Exception exception){
+            System.out.println("No se pudo cargar la estadística del número de aciertos");
+        }
+
+        try{
+            labelPuntaje.setText(labelPuntaje.getText() + " 2");
+        } catch (Exception exception){
+            System.out.println("No se pudo cargar la estadística del puntaje");
+        }
+
+        try{
+            labelTiempo.setText(labelTiempo.getText() + " 3");
+        } catch (Exception exception){
+            System.out.println("No se pudo cargar la estadística del tiempo");
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent evento){
         if (evento.getSource() == buttonVolver){
             dispose();
-            VentanaInicio ventana = new VentanaInicio(); 
+            VentanaInicio ventana = new VentanaInicio();
+
+        } else if (evento.getSource() == buttonSalir){
+            dispose();
         }
     }
 }

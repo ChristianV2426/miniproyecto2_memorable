@@ -176,6 +176,7 @@ import java.net.*;
         public void mouseClicked(MouseEvent evento){
             if (sonidoOn){
                 sonidoOn = false;
+                
 
             } else {
                 sonidoOn = true;
@@ -183,15 +184,10 @@ import java.net.*;
                     File rutaPorDefecto = new File("./");
                     System.out.println(rutaPorDefecto.getAbsolutePath());
                     File archivoSonido = new File("./src/co/edu/univalle/vista/sonidos/timer.wav");
-                    System.out.println("2");
                     AudioInputStream entradaAudio = AudioSystem.getAudioInputStream(archivoSonido);
-                    System.out.println("3");
                     Clip timerSonido = AudioSystem.getClip();
-                    System.out.println("4");
                     timerSonido.open(entradaAudio);
-                    System.out.println("5");
                     timerSonido.start();
-                    System.out.println("6");
                 } catch(Exception exception)
                 {
                     exception.printStackTrace();
