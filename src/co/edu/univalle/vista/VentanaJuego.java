@@ -165,7 +165,7 @@ import javax.swing.*;
             panelMatriz.add(recuadro.pintar());
             casillas = recuadro.getCasillas();
         }
-        casillas[posicionTecla].getJpanel().setBackground(Color.red);
+        casillas[posicionTecla].getJpanel().setBackground(new Color(85, 227, 237));
         labelCondicionSimbolo.setText("");
         tipoDeCondicion = pruebaJuego.getTipoDeCondicion();
 
@@ -174,7 +174,7 @@ import javax.swing.*;
             @Override
             public void run() {
                 for(int recuadros = 0; recuadros < 36; recuadros++) {
-                    // casillas[recuadros].getJlabel().setVisible(false); // Se recomienda comentar esta línea para depurar.
+                    casillas[recuadros].getJlabel().setVisible(false); // Se recomienda comentar esta línea para depurar.
                 }
                 labelCondicionSimbolo.setText(pruebaJuego.getSimboloRonda());
                 labelCondicionSimbolo.setForeground(pruebaJuego.getColorRonda());
@@ -210,14 +210,14 @@ import javax.swing.*;
             if(posicionTecla+1<36){
                     posicionTecla +=1;
                     casillas[posicionTecla-1].getJpanel().setBackground(casillas[posicionTecla-1].getColorJpanel());
-                    casillas[posicionTecla].getJpanel().setBackground(Color.red);
+                    casillas[posicionTecla].getJpanel().setBackground(new Color(85, 227, 237));
                 }
                 break;
             case 40:
             if(posicionTecla+9<36){
                     posicionTecla +=9;
                     casillas[posicionTecla-9].getJpanel().setBackground(casillas[posicionTecla-9].getColorJpanel());
-                    casillas[posicionTecla].getJpanel().setBackground(Color.red);
+                    casillas[posicionTecla].getJpanel().setBackground(new Color(85, 227, 237));
                 }
                 break;
 
@@ -225,7 +225,7 @@ import javax.swing.*;
             if(posicionTecla-1 >= 0){
                     posicionTecla -= 1;
                     casillas[posicionTecla+1].getJpanel().setBackground(casillas[posicionTecla+1].getColorJpanel());
-                    casillas[posicionTecla].getJpanel().setBackground(Color.red);
+                    casillas[posicionTecla].getJpanel().setBackground(new Color(85, 227, 237));
                 }
                 break;
 
@@ -233,7 +233,7 @@ import javax.swing.*;
             if(posicionTecla-9>=0){
                     posicionTecla -= 9;
                     casillas[posicionTecla+9].getJpanel().setBackground(casillas[posicionTecla+9].getColorJpanel());
-                    casillas[posicionTecla].getJpanel().setBackground(Color.red);
+                    casillas[posicionTecla].getJpanel().setBackground(new Color(85, 227, 237));
                 }
                 break;
 
