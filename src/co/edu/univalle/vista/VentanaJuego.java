@@ -28,6 +28,8 @@ import java.awt.*;
 // import java.util.*;
 import java.awt.event.*;
 import java.util.Random;
+import java.util.TimerTask;
+import java.util.Timer;
 
 import javax.swing.*;
 
@@ -49,12 +51,15 @@ import javax.swing.*;
         private JButton buttonSonido = new JButton("🔊"); //🔇
         private Casilla casillas[] = new Casilla[36];
         static private int posicionTecla = 0;
-        
+        private Timer timer = new Timer();
+        private int tiempoDeEspera = 2000; // 2 segundos. 
         
         // Constructor:
         public VentanaJuego(){
             // Listeners:
             this.addKeyListener(this);
+            
+            
             
             // Panel superior:
             northPanel.setPreferredSize(new Dimension(850, 90));
@@ -62,13 +67,13 @@ import javax.swing.*;
             panelCabecera.setPreferredSize(new Dimension(550, 70));
             panelCabecera.setBackground(new Color(0, 165, 181));
             panelCabecera.setLayout(new GridBagLayout());
-
+            
             GridBagConstraints restricciones = new GridBagConstraints();
             restricciones.weightx = 1.0;
             restricciones.weighty = 1.0;
             restricciones.fill = GridBagConstraints.BOTH;
             restricciones.insets = new Insets(5, 5, 5, 5);
-
+            
             restricciones.gridx = 0;
             restricciones.gridy = 0;
             restricciones.gridwidth = 1; 
@@ -76,7 +81,7 @@ import javax.swing.*;
             JPanel panelEnBlanco1 = new JPanel();
             panelEnBlanco1.setBackground(new Color(0, 165, 181));
             panelCabecera.add(panelEnBlanco1, restricciones);
-        
+            
             restricciones.gridx = 0;
             restricciones.gridy = 1;
             restricciones.gridwidth = 1; 
@@ -85,7 +90,7 @@ import javax.swing.*;
             buttonSonido.setFocusable(false);
             panelButtonSonido.add(buttonSonido);
             panelCabecera.add(panelButtonSonido, restricciones);
-
+            
             restricciones.gridx = 0;
             restricciones.gridy = 2;
             restricciones.gridwidth = 1; 
@@ -93,7 +98,7 @@ import javax.swing.*;
             JPanel panelEnBlanco2 = new JPanel();
             panelEnBlanco2.setBackground(new Color(0, 165, 181));
             panelCabecera.add(panelEnBlanco2, restricciones);
-    
+            
             restricciones.gridx = 1;
             restricciones.gridy = 1;
             restricciones.gridwidth = 1; 
@@ -106,7 +111,7 @@ import javax.swing.*;
             labelPuntuacion.setText(pruebaJuego.getPuntos());
             panelLabelPuntuacion.add(labelPuntuacion);
             panelCabecera.add(panelLabelPuntuacion, restricciones);
-
+            
             restricciones.gridx = 2;
             restricciones.gridy = 1;
             restricciones.gridwidth = 1; 
@@ -121,30 +126,30 @@ import javax.swing.*;
             panelCabecera.add(panelLabelVidas, restricciones);          
             
             northPanel.add(panelCabecera);
-
+            
             // Panel central:
             centerPanel.setBackground(new Color(238, 238, 238));
             panelMatriz.setLayout(new GridLayout(4, 9, 10, 10));
             actualizarCasillas();
             centerPanel.add(panelMatriz);
-
+            
             // Panel inferior:
             southPanel.setBackground(new Color(238, 238, 238));
             labelCondicionTexto.setFont(new Font("Arial", Font.PLAIN, 18));
-            labelCondicionSimbolo.setText(pruebaJuego.getSimboloRonda());
+            labelCondicionSimbolo.setText("");
             labelCondicionSimbolo.setFont(new Font("Arial", Font.PLAIN, 24));
-            labelCondicionSimbolo.setForeground(pruebaJuego.getColorRonda());
             panelFinal.add(labelCondicionTexto);
             panelFinal.add(labelCondicionSimbolo);
             southPanel.add(panelFinal);
             // Mostrar Pantalla Inicial.
+            
             setVisible(true);
-    }   
-
+        }   
+        
     public void actualizarVidas(){
         labelVidas.setText(pruebaJuego.getVidas());
     }
-
+    
     public void actualizarPuntos(){
         labelPuntuacion.setText(pruebaJuego.getPuntos());
     }
@@ -154,7 +159,23 @@ import javax.swing.*;
     }
 
     public void actualizarCasillas(){
-        // posicionTecla = 0;
+        // Tareas temporales:
+        TimerTask task = new TimerTask() {
+            
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                for(int recuadros = 0; recuadros < 36; recuadros++) {
+                    // casillas[recuadros].getJpanel().setBackground(new Color(0, 165, 181));
+                    casillas[recuadros].getJlabel().setVisible(false);
+                }
+                labelCondicionSimbolo.setText(pruebaJuego.getSimboloRonda());
+                labelCondicionSimbolo.setForeground(pruebaJuego.getColorRonda());
+            }
+        };
+    
+        timer.schedule(task, tiempoDeEspera);
+
         panelMatriz.removeAll();
         pruebaJuego.nuevaRonda();
         labelCondicionSimbolo.setText(pruebaJuego.getSimboloRonda());
@@ -164,6 +185,7 @@ import javax.swing.*;
             casillas = recuadro.getCasillas();
         }
         casillas[posicionTecla].getJpanel().setBackground(Color.red);
+        labelCondicionSimbolo.setText("");
     }
 
     @Override
