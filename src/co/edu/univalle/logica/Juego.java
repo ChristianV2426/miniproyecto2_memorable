@@ -16,7 +16,7 @@
 /**
     CLASE: Juego
     INTENCIÓN: Esta clase se encargará de implementar la lógica del juego Memorable.
-    RELACIONES:
+    RELACIONES: Conoce a VentanaJuego y a VentanaEstadisticas
 */
 
 package co.edu.univalle.logica;
@@ -45,7 +45,7 @@ public class Juego {
     private int verificarSimbolosCondicion = 0;
     private int rondaAsociada = 0;
     
-    //Métodos:
+    // Contructor:
     public Juego(int rondaAsociada, VentanaJuego ventanaAsociada) {
         this.ventanaAsociada = ventanaAsociada;
         palabraAAdivinar = simbolos[random.nextInt(4)];
@@ -53,7 +53,8 @@ public class Juego {
         this.rondaAsociada = rondaAsociada;
         this.nombreDelJugador = nombreDelJugador;
     }
-
+    
+    //Métodos:
     public Color getRandomColor() {
         return colores[random.nextInt(4)];
     }

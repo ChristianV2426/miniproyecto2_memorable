@@ -150,7 +150,7 @@ public class VentanaJuego extends Ventana implements KeyListener {
     }
     
     public void actualizarPuntos(){
-    labelPuntuacion.setText(pruebaJuego.getPuntos());
+        labelPuntuacion.setText(pruebaJuego.getPuntos());
     }
     
     public void setNombreUsuario(String nombreUsuario){
