@@ -19,6 +19,9 @@
 
     RELACIONES:
     -Es una Ventana.
+    -Contiene un objeto de la clase Juego.
+    -Contiene un arreglo de objetos de la clase Casilla. 
+    -Contiene un objeto de la clase Sonido. 
  */
 
 package co.edu.univalle.vista;
@@ -28,11 +31,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.TimerTask;
 import java.util.Timer;
-
 import javax.swing.*;
-import javax.sound.sampled.*;
-import java.io.*;
-import java.net.*;
 
 public class VentanaJuego extends Ventana implements KeyListener {
         // Atributos:
@@ -40,6 +39,7 @@ public class VentanaJuego extends Ventana implements KeyListener {
         private JLabel labelVidas = new JLabel();
         private JLabel labelCondicionTexto = new JLabel();
         private Juego pruebaJuego = new Juego(0, this);
+        private Sonido controladorSonido = new Sonido(this);
         private JLabel labelUsuario = new JLabel();
         private JLabel labelCondicionSimbolo = new JLabel();
         private JPanel panelCabecera = new JPanel();
@@ -52,13 +52,15 @@ public class VentanaJuego extends Ventana implements KeyListener {
         private Casilla casillas[] = new Casilla[36];
         static private int posicionTecla = 0;
         private Timer timer = new Timer();
-        private int tiempoDeEspera = 2000; // 2 segundos. 
+        private int tiempoDeEspera = 5000; // 5 segundos. 
         private int tipoDeCondicion;
         
         // Constructor:
         public VentanaJuego(){
             // Listeners:
             this.addKeyListener(this);
+            buttonSonido.addActionListener(this);
+            buttonSonido.putClientProperty("on", true);
             
             // Panel superior:
             northPanel.setPreferredSize(new Dimension(850, 90));
@@ -142,6 +144,8 @@ public class VentanaJuego extends Ventana implements KeyListener {
             panelFinal.add(labelCondicionSimbolo);
             southPanel.add(panelFinal);
 
+            // controladorSonido.reproducirSonido("./src/co/edu/univalle/vista/sonidos/prueba.wav");
+
             // Mostrar Pantalla Inicial.
             setVisible(true);
         }   
@@ -177,6 +181,7 @@ public class VentanaJuego extends Ventana implements KeyListener {
         casillas[posicionTecla].getJpanel().setBackground(new Color(85, 227, 237));
         labelCondicionSimbolo.setText("");
         tipoDeCondicion = pruebaJuego.getTipoDeCondicion();
+        controladorSonido.reproducirSonido("./src/co/edu/univalle/vista/sonidos/partidaFinalizada.wav");
 
         // Tareas temporales:
         TimerTask task = new TimerTask() {
@@ -195,15 +200,33 @@ public class VentanaJuego extends Ventana implements KeyListener {
                 }else if(tipoDeCondicion == 2){
                     labelCondicionTexto.setText("Seleccione los siguientes símbolos con color:");
                 }
+            controladorSonido.pararSonido();
             }
         };
         
         timer.schedule(task, tiempoDeEspera);
     }
 
+    public boolean getEstadoSonido(){
+        return (boolean) buttonSonido.getClientProperty("on");
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
+        if (e.getSource() == buttonSonido){
+            if((boolean) buttonSonido.getClientProperty("on")){
+                controladorSonido.pausarSonido();
+                buttonSonido.setText("🔇");
+                buttonSonido.putClientProperty("on", false);
+                
+
+
+            } else if(!(boolean) buttonSonido.getClientProperty("on")){
+                controladorSonido.reproducirSonido();
+                buttonSonido.setText("🔊");
+                buttonSonido.putClientProperty("on", true);
+            }
+        }
     }
     
     @Override
