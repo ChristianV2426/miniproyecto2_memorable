@@ -40,14 +40,16 @@ public class Juego {
     private String nombreDelJugador;
     private int tipoDeCondicion; 
     private String[] simbolos = {"♠","♣", "♥", "♦"};
-    // Negro, naranja-palido, vinotinto, azul.
-    private Color[] colores = {new Color(0, 0, 0), new Color(255, 178, 102), new Color(153, 0, 76), new Color(57,62,219)};
+    // Negro, naranja-palido, vinotinto, lima.
+    private Color[] colores = {new Color(0, 0, 0), new Color(0, 0, 255), new Color(153, 0, 76), new Color(255, 255, 51)};
     private int contadorSimbolosCondicion = 0;
     private int verificarSimbolosCondicion = 0;
     private int rondaAsociada = 0;
+    private int numeroAciertos = 0;
     private Sonido controladorSonido;
     private Timer timer = new Timer();
-    private int tiempoDeEsperaAciertoFallo = 2500; // 2.5 segundos
+    private int tiempoDeEsperaAciertoFallo = 2000; // 2 segundos
+
     
     // Contructor:
     public Juego(int rondaAsociada, VentanaJuego ventanaAsociada) {
@@ -100,6 +102,7 @@ public class Juego {
         if(tipoDeCondicion == 0){
             if(simbolo1 == palabraAAdivinar){
                 verificarSimbolosCondicion++;
+                numeroAciertos++;
                 if(verificarSimbolosCondicion == contadorSimbolosCondicion) {
                     sumarPuntos();
                     verificarSimbolosCondicion = 0;
@@ -109,14 +112,12 @@ public class Juego {
             } else {
                 restarVida();
                 verificarSimbolosCondicion = 0;
-                // if (vidas.length() == 0){
-                //     juegoPerdido();
-                // }
                 return false;
             }
         } else if(tipoDeCondicion == 1){
             if(color == colorAAdividar){
                 verificarSimbolosCondicion++;
+                numeroAciertos++;
                 if(verificarSimbolosCondicion == contadorSimbolosCondicion) {
                     sumarPuntos();
                     verificarSimbolosCondicion = 0;
@@ -131,6 +132,7 @@ public class Juego {
         }else if(tipoDeCondicion == 2){
             if(simbolo1 == palabraAAdivinar && color == colorAAdividar){
                 verificarSimbolosCondicion++;
+                numeroAciertos++;
                 if(verificarSimbolosCondicion == contadorSimbolosCondicion) {
                     sumarPuntos();
                     verificarSimbolosCondicion = 0;
@@ -155,18 +157,24 @@ public class Juego {
         return stringPuntuacion.toString();
     }
 
+    public int getNumeroAciertos(){
+        return numeroAciertos;
+    }
+
+    public int getPuntuacion(){
+        return puntuacion;
+    }
+
     private void sumarPuntos(){
         puntuacion += 100;
         ventanaAsociada.actualizarPuntos();
         controladorSonido.reproducirSonido("./src/co/edu/univalle/vista/sonidos/acierto.wav");
-        Casilla[] pruebaCasillas = ventanaAsociada.getCasillas();
-        for (int casillas = 0; casillas < 36; casillas++){
-            pruebaCasillas[casillas].getJpanel().removeMouseListener(pruebaCasillas[casillas]);
-            ventanaAsociada.removerKeyListener();
-        }
+        ventanaAsociada.desactivarListeners();
+
         TimerTask task0 = new TimerTask() {
             @Override
             public void run(){
+                controladorSonido.pararSonido();
                 ventanaAsociada.actualizarCasillas();
                 ventanaAsociada.actualizarColores();
             }
@@ -180,21 +188,27 @@ public class Juego {
             ventanaAsociada.actualizarVidas();
             rondaAsociada -= 1; // Evita que aumente la dificultad al perder vidas.
             controladorSonido.reproducirSonido("./src/co/edu/univalle/vista/sonidos/fallo.wav");
-            Casilla[] pruebaCasillas = ventanaAsociada.getCasillas();
-            for (int casillas = 0; casillas < 36; casillas++){
-                pruebaCasillas[casillas].getJpanel().removeMouseListener(pruebaCasillas[casillas]);
-                ventanaAsociada.removerKeyListener();
-            }
+            ventanaAsociada.desactivarListeners();
+
             TimerTask task0 = new TimerTask() {
                 @Override
                 public void run(){
+                    controladorSonido.pararSonido();
+
+                    if (vidas.length() == 0){
+                        gameOver();
+                        return;
+                    }
+
                     ventanaAsociada.actualizarCasillas();
                     ventanaAsociada.actualizarColores();
                 }
             };
             timer.schedule(task0, tiempoDeEsperaAciertoFallo);
-        } else {
-            System.out.println("No hay más vidas");// Texto de depuración. !!!!!!!!!!
         }
+    }
+
+    public void gameOver(){
+        ventanaAsociada.gameOver();
     }
  }

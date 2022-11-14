@@ -14,12 +14,21 @@
 */
 
 /**
-    CLASE: Sonida
+    CLASE: Sonido
     INTENCIÓN: Esta clase se encargará de implementar un controlador para los sonidos del juego.
     RELACIONES:
     -Conoce a un objeto de clase VentanaJuego.
 */
 
+/*
+    Todos los sonidos fueron tomados de Pixabay, licencia de uso libre.
+
+    Lista de los archivos de sonidos utilizados: 
+        Timer: ./src/co/edu/univalle/vista/sonidos/timer.wav
+        Acierto: ./src/co/edu/univalle/vista/sonidos/acierto.wav
+        Fallo: ./src/co/edu/univalle/vista/sonidos/fallo.wav
+        Partida Finalizada: ./src/co/edu/univalle/vista/sonidos/partidaFinalizada.wav
+*/
 
 package co.edu.univalle.logica;
 
@@ -27,16 +36,6 @@ import co.edu.univalle.vista.*;
 import java.io.*;
 import javax.sound.sampled.*;
 
-
-/*
-Todos los sonidos fueron tomados de Pixabay, licencia de uso libre.
-
-Lista de los archivos de sonidos utilizados: 
-Timer: ./src/co/edu/univalle/vista/sonidos/timer.wav
-Acierto: ./src/co/edu/univalle/vista/sonidos/acierto.wav
-Fallo: ./src/co/edu/univalle/vista/sonidos/fallo.wav
-Partida Terminada: ./src/co/edu/univalle/vista/sonidos/acierto.wav
-*/
 
 public class Sonido {
     private VentanaJuego ventanaJuego;

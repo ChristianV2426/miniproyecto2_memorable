@@ -32,6 +32,7 @@ public class VentanaInstrucciones extends Ventana {
     private JLabel labelTitulo = new JLabel("M E M O R A B L E");
     private JLabel labelSubtitulo = new JLabel("Instrucciones");
     private JLabel labelInstruccion = new JLabel();
+    private JLabel labelImagen = new JLabel();
     private JPanel panelCabecera = new JPanel();
     private JPanel panelPrincipal = new JPanel();
     private JPanel panelButtonVolver = new JPanel();
@@ -113,6 +114,7 @@ public class VentanaInstrucciones extends Ventana {
         restricciones.gridy = 0;
         restricciones.gridwidth = 1; 
         restricciones.gridheight = 4;
+        panelImagen.setMaximumSize(new Dimension(350, 240));
         panelPrincipal.add(panelImagen, restricciones);
 
         restricciones.gridx = 0;
@@ -142,8 +144,9 @@ public class VentanaInstrucciones extends Ventana {
             } catch (Exception exception){
                 System.out.println("No se pudo cargar la imagen");
             }
+            labelImagen.setIcon(imagenInstruccion);;
             panelImagen.removeAll();
-            panelImagen.add(new JLabel(imagenInstruccion));
+            panelImagen.add(labelImagen);
         
         // Cambiar el texto de la instrucción
         switch (numeroDeInstruccion){
@@ -159,12 +162,12 @@ public class VentanaInstrucciones extends Ventana {
                 break;
             
             case 3: 
-                labelInstruccion.setText("<html><b>Debes de estar atento </b> porque es posible que tengas que pulsar más de una ficha...</html");
+                labelInstruccion.setText("<html><b>Debes de estar atento de lo que te preguntan</b> porque es posible que tengas que pulsar más de una ficha...</html");
                 break;
 
             case 4: 
-                labelInstruccion.setText("<html>En el ejemplo en pantalla se pide encontrar todas las figuras en color azul,"
-                + " por lo que hay que dar clic sobre las 3 fichas que contienen figuras de color azul.</html");
+                labelInstruccion.setText("<html>En el ejemplo en pantalla hay que encontrar todas las figuras de color vinotinto,"
+                + " por lo que hay que dar clic sobre las 2 fichas que contienen figuras de color vinotinto.</html");
                 buttonSiguiente.setEnabled(true);
                 break;
             

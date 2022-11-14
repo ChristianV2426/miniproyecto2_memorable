@@ -54,9 +54,13 @@ public class VentanaJuego extends Ventana implements KeyListener {
         private Timer timer = new Timer();
         private int tiempoDeEsperaNuevaRonda = 5000; // 5 segundos. 
         private int tipoDeCondicion;
+        private long tiempoInicial;
+        private long tiempoFinal;
         
         // Constructor:
         public VentanaJuego(){
+            tiempoInicial = System.currentTimeMillis();
+
             // Listeners:
             buttonSonido.addActionListener(this);
             buttonSonido.putClientProperty("on", true);
@@ -160,21 +164,30 @@ public class VentanaJuego extends Ventana implements KeyListener {
         labelUsuario.setText("Jugador: " + nombreUsuario);
     }
 
+    public long getTiempoFinal(){
+        return tiempoFinal;
+    }
+
     public void actualizarColores(){
         labelCondicionSimbolo.setForeground(pruebaJuego.getColorRonda());
     }
 
-    public Casilla[] getCasillas(){
-        return casillas;
+    public void desactivarListeners(){
+        for (int contadorCasillas = 0; contadorCasillas < 36; contadorCasillas++){
+            casillas[contadorCasillas].getJpanel().removeMouseListener(casillas[contadorCasillas]);
+        }
+        this.removeKeyListener(this);
     }
 
-    public void removerKeyListener(){
-        this.removeKeyListener(this);
+    public void activarListeners(){
+        for (int contadorCasillas = 0; contadorCasillas < 36; contadorCasillas++){
+            casillas[contadorCasillas].getJpanel().addMouseListener(casillas[contadorCasillas]);
+        }
+        this.addKeyListener(this);
     }
     
     public void actualizarCasillas(){
-        this.addKeyListener(this);
-        labelCondicionTexto.setText("Mire los símbolos...");
+        labelCondicionTexto.setText("Observe las figuras detenidamente...");
         panelMatriz.removeAll();
         pruebaJuego.nuevaRonda();
         labelCondicionSimbolo.setText(pruebaJuego.getSimboloRonda());
@@ -189,28 +202,40 @@ public class VentanaJuego extends Ventana implements KeyListener {
         tipoDeCondicion = pruebaJuego.getTipoDeCondicion();
         controladorSonido.reproducirSonido("./src/co/edu/univalle/vista/sonidos/timer.wav");
 
+        desactivarListeners();
+
         // Tareas temporales:
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                activarListeners();
                 for(int recuadros = 0; recuadros < 36; recuadros++) {
                     casillas[recuadros].getJlabel().setVisible(false); // Se recomienda comentar esta línea para depurar.
                 }
                 labelCondicionSimbolo.setText(pruebaJuego.getSimboloRonda());
                 labelCondicionSimbolo.setForeground(pruebaJuego.getColorRonda());
                 if(tipoDeCondicion == 0){
-                    labelCondicionTexto.setText("Seleccione los siguientes símbolos:");
+                    labelCondicionTexto.setText("Seleccione la(s) figura(s) que cumpla(n) con este símbolo:");
                 } else if(tipoDeCondicion == 1){
-                    labelCondicionTexto.setText("Seleccione los siguientes colores:");
+                    labelCondicionTexto.setText("Seleccione la(s) figura(s) que cumpla(n) con este color:");
                     labelCondicionSimbolo.setText("■");
                 }else if(tipoDeCondicion == 2){
-                    labelCondicionTexto.setText("Seleccione los siguientes símbolos con color:");
+                    labelCondicionTexto.setText("Seleccione la(s) figura(s) que cumpla(n) con este símbolo y color:");
                 }
             controladorSonido.pararSonido();
             }
         };
         
         timer.schedule(task, tiempoDeEsperaNuevaRonda);
+    }
+
+    public void gameOver(){
+        controladorSonido.pararSonido();
+        tiempoFinal = System.currentTimeMillis();
+        tiempoFinal = tiempoFinal - tiempoInicial;
+        dispose();
+        VentanaEstadisticas ventanaEstadisticas = new VentanaEstadisticas(pruebaJuego, this);
+
     }
 
     public boolean getEstadoSonido(){
@@ -235,12 +260,11 @@ public class VentanaJuego extends Ventana implements KeyListener {
     
     @Override
     public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
     }
     
     @Override
     public void keyPressed(KeyEvent e) {
-        // TODO Auto-generated method stub
+
         switch(e.getKeyCode()) {
             case 39:
             if(posicionTecla+1<36){
@@ -277,11 +301,9 @@ public class VentanaJuego extends Ventana implements KeyListener {
                 casillas[posicionTecla].comprobar();
                 break;
         }
-        // System.out.println(posicionTecla);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
     }
 }

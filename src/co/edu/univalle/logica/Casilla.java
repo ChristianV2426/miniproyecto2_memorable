@@ -186,8 +186,10 @@ public class Casilla implements MouseListener{
         if(pruebaJuego.aciertoSimbolo(getSimbolo(), getColor())){
             controladorDificultad += 1;
             confirmarDificultad();
+            colorJpanel = new Color(0, 204, 0);
+        } else {
+            colorJpanel = new Color(204, 0, 0);
         }
-        colorJpanel = new Color(63, 255, 56);
         recuadroLabel.setVisible(true);
         recuadro.setBackground(colorJpanel);
         recuadro.removeMouseListener(this);
@@ -197,27 +199,22 @@ public class Casilla implements MouseListener{
     // Mouse Listener
     @Override
     public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
         comprobar();
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
     }
 }
