@@ -236,7 +236,6 @@ public class VentanaJuego extends Ventana implements KeyListener {
         casillas[0].reiniciarDificultad();
         dispose();
         VentanaEstadisticas ventanaEstadisticas = new VentanaEstadisticas(pruebaJuego, this);
-
     }
 
     public boolean getEstadoSonido(){

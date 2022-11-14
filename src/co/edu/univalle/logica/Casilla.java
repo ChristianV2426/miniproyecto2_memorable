@@ -30,6 +30,7 @@ public class Casilla implements MouseListener{
     static private Casilla casillas[] = new Casilla[36];
     private String[] simbolos = {"♠","♣", "♥", "♦", ""}; 
     private String simbolo = new String();
+    private Color colorPintadoSimbolo;
     static private int contadorId = 0;
     private Random random = new Random();
     static private int simbolosPintados = 0;
@@ -66,7 +67,7 @@ public class Casilla implements MouseListener{
             }
             // Se asignan los símbolos a cada casilla.
             if (simboloAPintar >= 0 && simboloAPintar <= 3 && simbolosPintados < numeroSimbolosAPintar) {
-                Color colorPintadoSimbolo = pruebaJuego.getRandomColor();
+                colorPintadoSimbolo = pruebaJuego.getRandomColor();
                 setColorPintado(colorPintadoSimbolo);
                 tipoDeCondicion = pruebaJuego.getTipoDeCondicion();
                 labelSymbolo.setForeground(colorPintadoSimbolo);
@@ -163,8 +164,6 @@ public class Casilla implements MouseListener{
         }
     }
 
-
-
     public JPanel getJpanel(){
         return recuadroPanel;
     }
@@ -193,6 +192,12 @@ public class Casilla implements MouseListener{
         if(pruebaJuego.aciertoSimbolo(getSimbolo(), getColor())){
             controladorDificultad += 1;
             confirmarDificultad();
+            colorJpanel = new Color(0, 204, 0);
+        } else if(tipoDeCondicion == 0 && simbolo == pruebaJuego.getSimboloRonda()){
+            colorJpanel = new Color(0, 204, 0);
+        } else if(tipoDeCondicion == 1 && colorPintadoSimbolo == pruebaJuego.getColorRonda()){
+            colorJpanel = new Color(0, 204, 0);
+        }else if(tipoDeCondicion == 2 && (simbolo == pruebaJuego.getSimboloRonda()) && (colorPintadoSimbolo == pruebaJuego.getColorRonda())){
             colorJpanel = new Color(0, 204, 0);
         } else {
             colorJpanel = new Color(204, 0, 0);
