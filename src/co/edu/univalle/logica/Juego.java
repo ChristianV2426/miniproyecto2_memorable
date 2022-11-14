@@ -123,6 +123,7 @@ public class Juego {
                     verificarSimbolosCondicion = 0;
                     return true;
                 }
+                
                 return false;
             } else {
                 restarVida();

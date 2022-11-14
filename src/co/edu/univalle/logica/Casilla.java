@@ -163,6 +163,8 @@ public class Casilla implements MouseListener{
         }
     }
 
+
+
     public JPanel getJpanel(){
         return recuadroPanel;
     }
@@ -177,6 +179,11 @@ public class Casilla implements MouseListener{
 
     public Casilla[] getCasillas(){
         return casillas;
+    }
+
+    public void reiniciarDificultad(){
+        controladorDificultad = 1;
+        numeroSimbolosAPintar = 2;
     }
 
     public void comprobar() {

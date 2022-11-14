@@ -233,6 +233,7 @@ public class VentanaJuego extends Ventana implements KeyListener {
         controladorSonido.pararSonido();
         tiempoFinal = System.currentTimeMillis();
         tiempoFinal = tiempoFinal - tiempoInicial;
+        casillas[0].reiniciarDificultad();
         dispose();
         VentanaEstadisticas ventanaEstadisticas = new VentanaEstadisticas(pruebaJuego, this);
 
