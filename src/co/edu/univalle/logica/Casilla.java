@@ -115,6 +115,10 @@ public class Casilla implements MouseListener{
     }
     
     // Métodos.
+    public void retirarMouseListener(){
+        recuadro.removeMouseListener(this);
+    }
+
     public JPanel pintar() {
         labelSymbolo.setText(simbolo);
         recuadro.setCursor(new Cursor(Cursor.HAND_CURSOR));

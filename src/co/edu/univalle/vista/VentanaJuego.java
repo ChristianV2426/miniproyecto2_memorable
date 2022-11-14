@@ -52,13 +52,12 @@ public class VentanaJuego extends Ventana implements KeyListener {
         private Casilla casillas[] = new Casilla[36];
         static private int posicionTecla = 0;
         private Timer timer = new Timer();
-        private int tiempoDeEspera = 5000; // 5 segundos. 
+        private int tiempoDeEsperaNuevaRonda = 5000; // 5 segundos. 
         private int tipoDeCondicion;
         
         // Constructor:
         public VentanaJuego(){
             // Listeners:
-            this.addKeyListener(this);
             buttonSonido.addActionListener(this);
             buttonSonido.putClientProperty("on", true);
             
@@ -144,8 +143,6 @@ public class VentanaJuego extends Ventana implements KeyListener {
             panelFinal.add(labelCondicionSimbolo);
             southPanel.add(panelFinal);
 
-            // controladorSonido.reproducirSonido("./src/co/edu/univalle/vista/sonidos/prueba.wav");
-
             // Mostrar Pantalla Inicial.
             setVisible(true);
         }   
@@ -166,8 +163,17 @@ public class VentanaJuego extends Ventana implements KeyListener {
     public void actualizarColores(){
         labelCondicionSimbolo.setForeground(pruebaJuego.getColorRonda());
     }
+
+    public Casilla[] getCasillas(){
+        return casillas;
+    }
+
+    public void removerKeyListener(){
+        this.removeKeyListener(this);
+    }
     
     public void actualizarCasillas(){
+        this.addKeyListener(this);
         labelCondicionTexto.setText("Mire los símbolos...");
         panelMatriz.removeAll();
         pruebaJuego.nuevaRonda();
@@ -181,7 +187,7 @@ public class VentanaJuego extends Ventana implements KeyListener {
         casillas[posicionTecla].getJpanel().setBackground(new Color(85, 227, 237));
         labelCondicionSimbolo.setText("");
         tipoDeCondicion = pruebaJuego.getTipoDeCondicion();
-        controladorSonido.reproducirSonido("./src/co/edu/univalle/vista/sonidos/partidaFinalizada.wav");
+        controladorSonido.reproducirSonido("./src/co/edu/univalle/vista/sonidos/timer.wav");
 
         // Tareas temporales:
         TimerTask task = new TimerTask() {
@@ -204,7 +210,7 @@ public class VentanaJuego extends Ventana implements KeyListener {
             }
         };
         
-        timer.schedule(task, tiempoDeEspera);
+        timer.schedule(task, tiempoDeEsperaNuevaRonda);
     }
 
     public boolean getEstadoSonido(){
@@ -218,13 +224,11 @@ public class VentanaJuego extends Ventana implements KeyListener {
                 controladorSonido.pausarSonido();
                 buttonSonido.setText("🔇");
                 buttonSonido.putClientProperty("on", false);
-                
-
 
             } else if(!(boolean) buttonSonido.getClientProperty("on")){
-                controladorSonido.reproducirSonido();
                 buttonSonido.setText("🔊");
                 buttonSonido.putClientProperty("on", true);
+                controladorSonido.reproducirSonido();
             }
         }
     }
@@ -271,7 +275,9 @@ public class VentanaJuego extends Ventana implements KeyListener {
 
             case 10:
                 casillas[posicionTecla].comprobar();
+                break;
         }
+        // System.out.println(posicionTecla);
     }
 
     @Override

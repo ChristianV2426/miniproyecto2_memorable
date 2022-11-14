@@ -16,14 +16,15 @@
 /**
     CLASE: Juego
     INTENCIÓN: Esta clase se encargará de implementar la lógica del juego Memorable.
-    RELACIONES: Conoce a VentanaJuego y a VentanaEstadisticas
+    RELACIONES:
+    -Conoce un objeto de la clase VentanaJuego.
+    -Conoce un objeto de la clase VentanaEstadisticas.
+    -Contiene un objeto de la clase Sonido.
 */
 
 package co.edu.univalle.logica;
-// import java.util.Map.Entry;
 
 import co.edu.univalle.vista.VentanaJuego;
-
 import java.awt.Color;
 import java.util.*;
 
@@ -39,11 +40,14 @@ public class Juego {
     private String nombreDelJugador;
     private int tipoDeCondicion; 
     private String[] simbolos = {"♠","♣", "♥", "♦"};
-    // Negro, morado, verde, azul.
-    private Color[] colores = {new Color(0,0,0), new Color(148,41,255), new Color(42, 102, 41), new Color(57,62,219)};
+    // Negro, naranja-palido, vinotinto, azul.
+    private Color[] colores = {new Color(0, 0, 0), new Color(255, 178, 102), new Color(153, 0, 76), new Color(57,62,219)};
     private int contadorSimbolosCondicion = 0;
     private int verificarSimbolosCondicion = 0;
     private int rondaAsociada = 0;
+    private Sonido controladorSonido;
+    private Timer timer = new Timer();
+    private int tiempoDeEsperaAciertoFallo = 2500; // 2.5 segundos
     
     // Contructor:
     public Juego(int rondaAsociada, VentanaJuego ventanaAsociada) {
@@ -52,6 +56,7 @@ public class Juego {
         colorAAdividar = getRandomColor();
         this.rondaAsociada = rondaAsociada;
         this.nombreDelJugador = nombreDelJugador;
+        this.controladorSonido = new Sonido(this.ventanaAsociada);
     }
     
     //Métodos:
@@ -104,6 +109,9 @@ public class Juego {
             } else {
                 restarVida();
                 verificarSimbolosCondicion = 0;
+                // if (vidas.length() == 0){
+                //     juegoPerdido();
+                // }
                 return false;
             }
         } else if(tipoDeCondicion == 1){
@@ -150,8 +158,20 @@ public class Juego {
     private void sumarPuntos(){
         puntuacion += 100;
         ventanaAsociada.actualizarPuntos();
-        ventanaAsociada.actualizarCasillas();
-        ventanaAsociada.actualizarColores();
+        controladorSonido.reproducirSonido("./src/co/edu/univalle/vista/sonidos/acierto.wav");
+        Casilla[] pruebaCasillas = ventanaAsociada.getCasillas();
+        for (int casillas = 0; casillas < 36; casillas++){
+            pruebaCasillas[casillas].getJpanel().removeMouseListener(pruebaCasillas[casillas]);
+            ventanaAsociada.removerKeyListener();
+        }
+        TimerTask task0 = new TimerTask() {
+            @Override
+            public void run(){
+                ventanaAsociada.actualizarCasillas();
+                ventanaAsociada.actualizarColores();
+            }
+        };
+        timer.schedule(task0, tiempoDeEsperaAciertoFallo);
     }
     
     private void restarVida(){
@@ -159,8 +179,20 @@ public class Juego {
             vidas.deleteCharAt(vidas.length()-1);
             ventanaAsociada.actualizarVidas();
             rondaAsociada -= 1; // Evita que aumente la dificultad al perder vidas.
-            ventanaAsociada.actualizarCasillas();
-            ventanaAsociada.actualizarColores();
+            controladorSonido.reproducirSonido("./src/co/edu/univalle/vista/sonidos/fallo.wav");
+            Casilla[] pruebaCasillas = ventanaAsociada.getCasillas();
+            for (int casillas = 0; casillas < 36; casillas++){
+                pruebaCasillas[casillas].getJpanel().removeMouseListener(pruebaCasillas[casillas]);
+                ventanaAsociada.removerKeyListener();
+            }
+            TimerTask task0 = new TimerTask() {
+                @Override
+                public void run(){
+                    ventanaAsociada.actualizarCasillas();
+                    ventanaAsociada.actualizarColores();
+                }
+            };
+            timer.schedule(task0, tiempoDeEsperaAciertoFallo);
         } else {
             System.out.println("No hay más vidas");// Texto de depuración. !!!!!!!!!!
         }
